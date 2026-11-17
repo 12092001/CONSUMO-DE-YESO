@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f2f46">
+<title>Consumo de Yeso · Fabricación de moldes</title>
+<style>
+:root{--bg:#f3f1ec;--card:#fff;--ink:#1d2533;--mut:#667085;--line:#e3e0d8;--pri:#1f4e8c;--pri2:#e8eef7;--est:#8ea3bf;--real:#d9822b;--rec:#2f8f6b;--bad:#c2410c;--warn:#a16207;--hdr:#1f2f46}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;-webkit-text-size-adjust:100%;padding-bottom:calc(78px + env(safe-area-inset-bottom));overflow-x:hidden}
+.top{position:sticky;top:0;z-index:30;background:var(--hdr);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:36px;height:36px;border-radius:10px;background:#f3efe6;color:var(--hdr);display:grid;place-items:center;font-weight:800;font-size:17px;flex:none}
+h1{font-size:17px;margin:0;line-height:1.15}
+.brand small{color:#b9c5d6;font-size:12px;display:block}
+.tagEj{background:#f59e0b;color:#1d2533;border-radius:6px;padding:1px 6px;font-size:10px;font-weight:800;margin-left:4px;vertical-align:1px}
+.topR{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.topR select{background:#2b3f5c;color:#fff;border:1px solid #3d5577;border-radius:10px;padding:7px 8px;max-width:150px;font-size:14px;min-height:36px}
+.chip{font-size:11px;padding:4px 8px;border-radius:999px;background:#2b3f5c;color:#cfd8e6;white-space:nowrap}
+.chip.ok{background:#1f6b52;color:#e6fff4}.chip.err{background:#8a2c0d;color:#ffe8dd}
+nav#tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom)}
+nav#tabs button{border:0;background:none;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mut);cursor:pointer;min-height:58px;font-family:inherit}
+nav#tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav#tabs button.on{color:var(--pri);font-weight:700}
+@media(min-width:900px){
+ body{padding-bottom:30px}
+ nav#tabs{position:static;display:flex;justify-content:center;gap:4px;border-top:0;border-bottom:1px solid var(--line);padding:6px}
+ nav#tabs button{flex-direction:row;font-size:14px;min-height:0;padding:9px 16px;border-radius:10px;gap:8px}
+ nav#tabs button.on{background:var(--pri2)}
+}
+main{max-width:1180px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;min-width:0}
+.card h2{font-size:16px;margin:0 0 4px}
+.card .hint{color:var(--mut);font-size:12.5px;margin:0 0 10px}
+.cols2{display:grid;gap:12px}
+@media(min-width:900px){.cols2{grid-template-columns:1fr 1fr}.cols2>.card{margin-bottom:0}.cols2{margin-bottom:12px}}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media(min-width:700px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1050px){.kpis{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;min-width:0}
+.kpi span{font-size:12px;color:var(--mut);display:block}
+.kpi b{font-size:21px;display:block;margin:4px 0 2px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi small{font-size:12px;color:var(--mut)}
+.kpi.red b{color:var(--bad)}.kpi.grn b{color:var(--rec)}
+.alert{border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;border:1px solid;line-height:1.4}
+.alert.bad{background:#fff1ea;border-color:#f3c1a8;color:#7c2d12}
+.alert.warn{background:#fff8e6;border-color:#f1d9a0;color:#6b4708}
+.alert.ok{background:#ecf8f2;border-color:#b5e0cb;color:#14532d}
+.alert.info{background:#eef3fb;border-color:#c5d5ee;color:#1e3a5f}
+.alert .row{margin-top:8px}
+.btn{border:1px solid #d6d2c8;background:#fff;color:var(--ink);border-radius:10px;padding:9px 14px;font-size:14px;font-weight:600;cursor:pointer;min-height:42px;font-family:inherit;touch-action:manipulation}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.grn{background:var(--rec);border-color:var(--rec);color:#fff}
+.btn.dan{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.ghost{color:var(--bad)}
+.btn.sm{padding:5px 10px;min-height:34px;font-size:13px}
+.btn.hd{background:#f3efe6;border-color:#f3efe6;color:var(--hdr);min-height:36px;padding:6px 12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.lnk{background:none;border:0;padding:0;color:var(--pri);font-weight:700;font:inherit;font-weight:700;cursor:pointer;text-align:left}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:900px){.grid.g4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut);min-width:0}
+label.f.w{grid-column:1/-1}
+label.f em{font-style:normal;font-size:11px;color:#8a8f99}
+input,select,textarea{font:inherit;font-size:16px;padding:9px 10px;border:1px solid #d6d2c8;border-radius:10px;background:#fff;color:var(--ink);width:100%;min-width:0;min-height:42px}
+input:focus,select:focus,textarea:focus{outline:2px solid #9db8e0;border-color:var(--pri)}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#fff;z-index:1;white-space:normal;min-width:120px}
+thead th{background:#f7f5f0;font-size:12px;color:var(--mut);font-weight:600}
+thead th:first-child{background:#f7f5f0}
+tr.tot td{font-weight:700;background:#f4f7fb}
+tr.tot td:first-child{background:#f4f7fb}
+td small{display:block;color:var(--mut);font-size:11px}
+td.cur,th.cur{background:#eef3fb}
+.pc{width:64px;padding:5px 6px;font-size:15px;text-align:right;min-height:34px;border-radius:8px}
+.pc:not(:placeholder-shown){background:#fff8e6;border-color:#e8c97a}
+.chart{width:100%;height:auto;display:block}
+.chart .ax{font-size:11px;fill:#7a8394}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.legend i.ln{height:3px;vertical-align:2px}
+.seg{display:inline-flex;border:1px solid #d6d2c8;border-radius:10px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--mut);min-height:36px}
+.seg button.on{background:var(--pri);color:#fff;font-weight:700}
+.nav3{display:flex;align-items:center;gap:6px}
+.nav3 b{min-width:120px;text-align:center}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.li:last-child{border-bottom:0}
+.li .m{min-width:0}
+.li .m small{display:block;color:var(--mut);font-size:12px}
+.li .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dayh{font-size:12px;color:var(--mut);font-weight:700;margin:12px 0 2px;text-transform:capitalize}
+.bd{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.bd.Pendiente{background:#e8eef7;color:#1f4e8c}.bd.Atrasada{background:#fde4d8;color:#9a3412}.bd.Parcial{background:#fff1cc;color:#7a5200}.bd.Recibida{background:#dcf3e8;color:#14603f}.bd.Cancelada{background:#eee;color:#666}
+.pcard{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
+.pcard .t{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pcard .t b{font-size:16px}
+.pcard .meta{color:var(--mut);font-size:13px;margin:6px 0;line-height:1.5}
+.pg{height:8px;background:#ece9e2;border-radius:9px;overflow:hidden;margin:6px 0}
+.pg i{display:block;height:100%;background:var(--rec)}
+.recs{font-size:12.5px;color:var(--mut);margin:4px 0 8px}
+.recs span{display:inline-flex;align-items:center;gap:4px;background:#f1f6f3;border-radius:8px;padding:2px 4px 2px 8px;margin:2px 4px 2px 0}
+.recs button{border:0;background:none;color:var(--bad);font-size:15px;cursor:pointer;padding:0 4px;min-height:24px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.cal .dh{text-align:center;font-size:11px;color:var(--mut);font-weight:700;padding:4px 0}
+.cd{min-height:66px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:3px;font-size:11px;cursor:pointer;overflow:hidden;min-width:0}
+.cd b{font-size:12px}
+.cd.o{opacity:.4}
+.cd.t{box-shadow:inset 0 0 0 2px var(--pri)}
+.cd.s{background:var(--pri2)}
+.ev{display:block;border-radius:4px;padding:1px 3px;margin-top:2px;color:#fff;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.sol{background:#8a94a6}.ev.esp{background:var(--pri)}.ev.atr{background:var(--bad)}.ev.rec{background:var(--rec)}
+.more{font-size:10px;color:var(--mut)}
+@media(max-width:620px){.cd{min-height:52px}.ev{font-size:0;height:6px;padding:0;margin-top:3px}.more{display:none}}
+.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(15,23,35,.5);display:flex;align-items:flex-end;justify-content:center}
+.modal[hidden]{display:none}
+.mbox{background:#fff;width:100%;max-width:580px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.modal{align-items:center}.mbox{border-radius:18px}}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.mh h3{margin:0;font-size:17px}
+.x{border:0;background:#f1efe9;border-radius:10px;width:38px;height:38px;font-size:22px;cursor:pointer;color:var(--mut)}
+.merr{color:var(--bad);font-size:13px;min-height:4px;margin:8px 0 0}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#1d2533;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:70;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.chk{display:flex;flex-wrap:wrap;gap:6px}
+.chk label{display:inline-flex;align-items:center;gap:5px;border:1px solid #d6d2c8;border-radius:10px;padding:6px 10px;font-size:14px;cursor:pointer;background:#fff}
+.chk input{width:auto;min-height:0}
+.empty{color:var(--mut);text-align:center;padding:20px 8px;font-size:14px}
+.formula{background:#f7f5f0;border-radius:10px;padding:10px 12px;font-size:13px;color:#444;margin-bottom:10px;line-height:1.5}
+.note{font-size:12.5px;color:var(--mut);line-height:1.5}
+code{background:#f1efe9;padding:1px 5px;border-radius:5px;font-size:12px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="logo">Y</div><div><h1>Consumo de Yeso</h1><small id="sub">Fabricación de moldes</small></div></div>
+  <div class="topR"><select id="matSel" aria-label="Material"></select><button class="btn hd" data-a="xls">⬇ Excel</button><span id="sync" class="chip">Local</span></div>
+</header>
+<nav id="tabs"></nav>
+<main id="main"></main>
+<div id="modal" class="modal" hidden></div>
+<div id="toast"></div>
+<input type="file" id="impFile" accept=".json,application/json" hidden>
+<script>
+(function(){
+'use strict';
+var LS='consumoYeso_v1',LSU='consumoYeso_ui',LSS='consumoYeso_sync';
+var MES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+var MESL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var DIAS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+function $(s){return document.querySelector(s)}
+function pad(n){return String(n).padStart(2,'0')}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function num(v){var n=parseFloat(String(v==null?'':v).replace(',','.'));return isFinite(n)?n:0}
+function fmt(n,d){d=d||0;return (isFinite(n)?n:0).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function uid(){return Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4)}
+function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function pd(s){var a=String(s).split('-').map(Number);return new Date(Date.UTC(a[0],(a[1]||1)-1,a[2]||1))}
+function ymd(d){return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())}
+function addD(s,n){var d=pd(s);d.setUTCDate(d.getUTCDate()+n);return ymd(d)}
+function dow(s){return pd(s).getUTCDay()}
+function wkStart(s){return addD(s,-((dow(s)+6)%7))}
+function isoWeek(s){var d=pd(s);var day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day+3);var y=d.getUTCFullYear();var f=new Date(Date.UTC(y,0,4));return {y:y,w:1+Math.round(((d-f)/864e5-3+((f.getUTCDay()+6)%7))/7)}}
+function fdate(s){return s?s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(0,4):'—'}
+function fdateS(s){return s?(+s.slice(8,10))+' '+MES[+s.slice(5,7)-1]:'—'}
+function dim(y,m){return new Date(Date.UTC(y,m+1,0)).getUTCDate()}
+function diffDays(a,b){return Math.round((pd(b)-pd(a))/864e5)}
+function isDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(String(s||''))}
+
+/* ================= ESTADO ================= */
+var cache={};
+function blank(){var t=today();return {v:1,ejemplo:false,updatedAt:0,config:{merma:5,diasLab:[1,2,3,4,5,6],leadTime:14,planta:''},materiales:[{id:'m1',nombre:'Yeso para moldes',kgSaco:25,stockIni:0,fechaIni:t.slice(0,8)+'01',minimo:0}],modelos:[],plan:{},pos:[],consumos:[]}}
+function norm(o){var b=blank();o.config=Object.assign(b.config,o.config||{});if(!Array.isArray(o.config.diasLab))o.config.diasLab=b.config.diasLab;['materiales','modelos','pos','consumos'].forEach(function(k){if(!Array.isArray(o[k]))o[k]=o[k]&&typeof o[k]==='object'?Object.keys(o[k]).map(function(x){return o[k][x]}):[]});o.materiales=o.materiales.filter(Boolean);o.modelos=o.modelos.filter(Boolean);o.pos=o.pos.filter(Boolean);o.consumos=o.consumos.filter(Boolean);if(!o.plan||typeof o.plan!=='object')o.plan={};o.pos.forEach(function(p){if(!p.recibos)p.recibos=[];if(!Array.isArray(p.recibos))p.recibos=Object.keys(p.recibos).map(function(x){return p.recibos[x]});p.recibos=p.recibos.filter(Boolean)});if(!o.materiales.length)o.materiales=b.materiales;return o}
+function ejemplo(){
+  var t=today(),ty=+t.slice(0,4),tm=+t.slice(5,7)-1,pm=tm===0?11:tm-1,py=tm===0?ty-1:ty;
+  var ini=py+'-'+pad(pm+1)+'-01';
+  var o=blank();o.ejemplo=true;
+  o.materiales=[{id:'m1',nombre:'Yeso cerámico',kgSaco:25,stockIni:9000,fechaIni:ini,minimo:6000}];
+  o.modelos=[
+    {id:'md1',nombre:'Taza (juego completo)',materialId:'m1',kgPorMolde:180,moldesMes:30},
+    {id:'md2',nombre:'Tanque',materialId:'m1',kgPorMolde:90,moldesMes:20},
+    {id:'md3',nombre:'Anillo',materialId:'m1',kgPorMolde:40,moldesMes:25},
+    {id:'md4',nombre:'Lavabo',materialId:'m1',kgPorMolde:70,moldesMes:15}];
+  var i=0;
+  for(var d=ini;d<t;d=addD(d,1)){
+    if(dow(d)===0)continue;i++;
+    var q={md1:i%5===0?2:1,md2:i%4===3?0:1,md3:i%13===0?0:1,md4:i%2};
+    o.modelos.forEach(function(m){var n=q[m.id];if(n>0)o.consumos.push({id:uid(),fecha:d,modeloId:m.id,materialId:'m1',moldes:n,kg:Math.round(n*m.kgPorMolde*(1.02+(i%5)*0.012)),nota:''})});
+  }
+  o.pos=[
+    {id:uid(),numero:'PO-4501',proveedor:'Proveedor ejemplo',materialId:'m1',fechaSol:addD(ini,-6),fechaEsp:addD(ini,8),sacos:400,cancelada:false,nota:'',recibos:[{id:uid(),fecha:addD(ini,9),sacos:400}]},
+    {id:uid(),numero:'PO-4502',proveedor:'Proveedor ejemplo',materialId:'m1',fechaSol:addD(ini,10),fechaEsp:addD(ini,23),sacos:400,cancelada:false,nota:'Entrega en dos partes',recibos:[{id:uid(),fecha:addD(ini,24),sacos:240}]},
+    {id:uid(),numero:'PO-4503',proveedor:'Proveedor ejemplo',materialId:'m1',fechaSol:addD(t,-9),fechaEsp:addD(t,3),sacos:400,cancelada:false,nota:'',recibos:[]},
+    {id:uid(),numero:'PO-4504',proveedor:'Proveedor ejemplo',materialId:'m1',fechaSol:addD(t,-1),fechaEsp:addD(t,20),sacos:400,cancelada:false,nota:'',recibos:[]}];
+  return o;
+}
+function load(){try{var r=localStorage.getItem(LS);if(r){var o=JSON.parse(r);if(o&&o.materiales)return norm(o)}}catch(e){}return ejemplo()}
+var S=load();
+var UI=(function(){var t=today(),d={tab:'res',mat:'all',year:+t.slice(0,4),calMonth:t.slice(0,7),calSel:t,consMonth:t.slice(0,7),poF:'abiertas',lastMod:''};try{var u=JSON.parse(localStorage.getItem(LSU));if(u)d=Object.assign(d,u)}catch(e){}return d})();
+function saveUI(){try{localStorage.setItem(LSU,JSON.stringify(UI))}catch(e){}}
+function save(noSync){S.updatedAt=Date.now();cache={};try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){toast('No se pudo guardar en este navegador')}if(!noSync)Sync.push()}
+
+/* ================= CÁLCULOS ================= */
+function matById(id){return S.materiales.find(function(m){return m.id===id})}
+function modById(id){return S.modelos.find(function(m){return m.id===id})}
+function mats(){return S.materiales.filter(function(m){return UI.mat==='all'||m.id===UI.mat})}
+function mods(){return S.modelos.filter(function(m){return UI.mat==='all'||m.materialId===UI.mat})}
+function kgSacoRef(){var s={};mats().forEach(function(m){s[num(m.kgSaco)]=1});var k=Object.keys(s);return k.length===1&&+k[0]>0?+k[0]:0}
+function moldesPlan(md,y,m){var p=S.plan[y]&&S.plan[y][md.id];var v=p?p[m]:undefined;return (v===null||v===undefined||v==='')?num(md.moldesMes):num(v)}
+function kgMolde(md){return num(md.kgPorMolde)*(1+num(S.config.merma)/100)}
+function estMes(y,m,matId){var k='em'+y+'-'+m+'-'+(matId||UI.mat);if(k in cache)return cache[k];var list=matId?S.modelos.filter(function(x){return x.materialId===matId}):mods();var s=0;list.forEach(function(md){s+=moldesPlan(md,y,m)*kgMolde(md)});return cache[k]=s}
+function laborables(y,m){var k='lb'+y+'-'+m;if(k in cache)return cache[k];var c=0,dl=S.config.diasLab;for(var d=1;d<=dim(y,m);d++){if(dl.indexOf(new Date(Date.UTC(y,m,d)).getUTCDay())>=0)c++}return cache[k]=c}
+function estDia(s){if(S.config.diasLab.indexOf(dow(s))<0)return 0;var y=+s.slice(0,4),m=+s.slice(5,7)-1,l=laborables(y,m);return l?estMes(y,m)/l:0}
+function estRange(a,b){var s=0;for(var d=a;d<=b;d=addD(d,1))s+=estDia(d);return s}
+function idx(){if(cache.idx)return cache.idx;var real={},rec={},ms={};mats().forEach(function(m){ms[m.id]=1});
+  S.consumos.forEach(function(c){if(ms[c.materialId])real[c.fecha]=(real[c.fecha]||0)+num(c.kg)});
+  S.pos.forEach(function(p){if(!ms[p.materialId])return;var ks=num((matById(p.materialId)||{}).kgSaco);p.recibos.forEach(function(r){rec[r.fecha]=(rec[r.fecha]||0)+num(r.sacos)*ks})});
+  return cache.idx={real:real,rec:rec,ms:ms}}
+function sumRange(map,a,b){var s=0;for(var k in map){if(k>=a&&k<=b)s+=map[k]}return s}
+function stockAt(s,list){var t=0;(list||mats()).forEach(function(m){var ini=m.fechaIni||'0000-00-00';if(s<ini)return;t+=num(m.stockIni);
+  S.consumos.forEach(function(c){if(c.materialId===m.id&&c.fecha>=ini&&c.fecha<=s)t-=num(c.kg)});
+  S.pos.forEach(function(p){if(p.materialId!==m.id)return;p.recibos.forEach(function(r){if(r.fecha>=ini&&r.fecha<=s)t+=num(r.sacos)*num(m.kgSaco)})})});return t}
+function poRec(p){return p.recibos.reduce(function(a,r){return a+num(r.sacos)},0)}
+function poKgSaco(p){return num((matById(p.materialId)||{}).kgSaco)}
+function pendKg(p){if(p.cancelada)return 0;return Math.max(0,num(p.sacos)-poRec(p))*poKgSaco(p)}
+function poStatus(p){if(p.cancelada)return 'Cancelada';var r=poRec(p);if(r>=num(p.sacos)&&num(p.sacos)>0)return 'Recibida';if(r>0)return 'Parcial';return p.fechaEsp<today()?'Atrasada':'Pendiente'}
+function proyeccion(){if(cache.pj)return cache.pj;var t=today(),st=stockAt(t),arr={},ms=idx().ms;
+  S.pos.forEach(function(p){if(p.cancelada||!ms[p.materialId])return;var kg=pendKg(p);if(kg<=0)return;var d=p.fechaEsp<=t?addD(t,1):p.fechaEsp;arr[d]=(arr[d]||0)+kg});
+  var min=mats().reduce(function(a,m){return a+num(m.minimo)},0),map={},bajoMin=null,cero=null,stNo=st,ceroSin=null;map[t]=st;
+  for(var i=1;i<=400;i++){var d=addD(t,i),e=estDia(d);st+=(arr[d]||0)-e;stNo-=e;map[d]=st;if(bajoMin===null&&st<min)bajoMin=d;if(cero===null&&st<=0)cero=d;if(ceroSin===null&&stNo<=0)ceroSin=d}
+  return cache.pj={map:map,arr:arr,min:min,bajoMin:bajoMin,cero:cero,ceroSin:ceroSin}}
+function kpis(){var t=today(),y=+t.slice(0,4),m=+t.slice(5,7)-1,a=t.slice(0,8)+'01',I=idx(),pj=proyeccion();
+  var anual=0;for(var i=0;i<12;i++)anual+=estMes(y,i);
+  var e30=estRange(addD(t,1),addD(t,30));
+  var pend=S.pos.filter(function(p){return !p.cancelada&&I.ms[p.materialId]&&pendKg(p)>0});
+  var lead=num(S.config.leadTime),sug=pj.bajoMin?addD(pj.bajoMin,-lead):null,sugKg=pj.bajoMin?estRange(pj.bajoMin,addD(pj.bajoMin,29)):0;
+  return {t:t,y:y,m:m,st:stockAt(t),pj:pj,min:pj.min,em:estMes(y,m),eTo:estRange(a,t),rm:sumRange(I.real,a,t),anual:anual,ra:sumRange(I.real,y+'-01-01',t),prom:e30/30,
+    cob:pj.cero?diffDays(t,pj.cero):null,cobSin:pj.ceroSin?diffDays(t,pj.ceroSin):null,pend:pend,pendKgT:pend.reduce(function(s,p){return s+pendKg(p)},0),
+    next:pend.map(function(p){return p.fechaEsp}).sort()[0]||null,sug:sug,sugKg:sugKg,lead:lead,ref:kgSacoRef()}}
+function minIni(){return mats().map(function(m){return m.fechaIni||'0000-00-00'}).sort()[0]||'0000-00-00'}
+function semanas(a,b){var out=[],I=idx(),t=today(),pj=proyeccion(),mi=minIni();for(var s=wkStart(a);s<=b;s=addD(s,7)){var e=addD(s,6),w=isoWeek(s);
+  out.push({s:s,e:e,w:w.w,wy:w.y,label:'S'+w.w,est:estRange(s,e),real:sumRange(I.real,s,e),rec:sumRange(I.rec,s,e),stock:e<mi?null:e<=t?stockAt(e):(pj.map[e]!==undefined?pj.map[e]:null),tipo:e<mi?'':e<=t?'Real':(pj.map[e]!==undefined?'Proyectado':''),cur:s<=t&&t<=e})}return out}
+function meses(y){var I=idx(),t=today(),pj=proyeccion(),mi=minIni();return MES.map(function(n,m){var a=y+'-'+pad(m+1)+'-01',b=y+'-'+pad(m+1)+'-'+pad(dim(y,m));
+  return {m:m,label:n,a:a,b:b,est:estMes(y,m),real:sumRange(I.real,a,b),rec:sumRange(I.rec,a,b),stock:b<mi?null:b<=t?stockAt(b):(pj.map[b]!==undefined?pj.map[b]:null),tipo:b<mi?'':b<=t?'Real':(pj.map[b]!==undefined?'Proyectado':''),cur:a<=t&&t<=b}})}
+function sacosTxt(kg,ref){ref=ref===undefined?kgSacoRef():ref;return ref?fmt(kg/ref,0)+' sacos':''}
+
+/* ================= GRÁFICAS ================= */
+function niceMax(v){if(v<=0)return 1;var p=Math.pow(10,Math.floor(Math.log10(v))),n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
+function short(v){var a=Math.abs(v);return a>=1000?(v/1000).toLocaleString('es-MX',{maximumFractionDigits:a>=10000?0:1})+'k':fmt(v)}
+function legend(series){return '<div class="legend">'+series.map(function(s){return '<span><i class="'+(s.line?'ln':'')+'" style="background:'+s.color+'"></i>'+esc(s.name)+'</span>'}).join('')+'</div>'}
+function barChart(o){var W=480,H=o.h||220,L=40,R=4,T=10,B=24,ih=H-T-B,iw=W-L-R,all=[];o.series.forEach(function(s){all=all.concat(s.values)});
+  var max=niceMax(Math.max.apply(null,[0].concat(all))),n=o.labels.length,gw=iw/n,k=o.series.length,bw=Math.max(2,Math.min(14,gw*0.8/k)),g='';
+  if(o.hl!=null&&o.hl>=0)g+='<rect x="'+(L+gw*o.hl)+'" y="'+T+'" width="'+gw+'" height="'+ih+'" fill="#1f4e8c" opacity=".08" rx="4"/>';
+  for(var i=0;i<=4;i++){var y=T+ih*(1-i/4);g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="#ebe7de"/><text x="'+(L-5)+'" y="'+(y+4)+'" text-anchor="end" class="ax">'+short(max*i/4)+'</text>'}
+  var step=Math.ceil(n/13);
+  o.labels.forEach(function(lb,i){o.series.forEach(function(s,j){var v=s.values[i]||0,h=v>0?Math.max(1,v/max*ih):0,x=L+gw*i+(gw-bw*k)/2+bw*j;
+    g+='<rect x="'+x.toFixed(1)+'" y="'+(T+ih-h).toFixed(1)+'" width="'+Math.max(1,bw-1.5).toFixed(1)+'" height="'+h.toFixed(1)+'" rx="1.5" fill="'+s.color+'"><title>'+esc(lb)+' · '+esc(s.name)+': '+fmt(v)+' kg</title></rect>'});
+    if(i%step===0)g+='<text x="'+(L+gw*i+gw/2)+'" y="'+(H-7)+'" text-anchor="middle" class="ax">'+esc(lb)+'</text>'});
+  return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(o.title||'Gráfica')+'">'+g+'</svg>'+legend(o.series)}
+function lineChart(o){var W=480,H=o.h||220,L=40,R=8,T=12,B=24,ih=H-T-B,iw=W-L-R,all=[];o.series.forEach(function(s){all=all.concat(s.values.filter(function(v){return v!=null}))});
+  var hi=niceMax(Math.max.apply(null,[0].concat(all))),lo0=Math.min.apply(null,[0].concat(all)),lo=lo0<0?-niceMax(-lo0):0,n=o.labels.length,g='';
+  function X(i){return L+(n>1?iw*i/(n-1):iw/2)}function Y(v){return T+ih*(1-(v-lo)/(hi-lo))}
+  for(var i=0;i<=4;i++){var v=lo+(hi-lo)*i/4,y=Y(v);g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+(Math.abs(v)<1e-9&&lo<0?'#b9b3a6':'#ebe7de')+'"/><text x="'+(L-5)+'" y="'+(y+4)+'" text-anchor="end" class="ax">'+short(v)+'</text>'}
+  o.series.forEach(function(s){var d='';s.values.forEach(function(v,i){if(v==null)return;d+=(d?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)});
+    g+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="'+(s.dash?1.6:2.4)+'"'+(s.dash?' stroke-dasharray="5 4"':'')+' stroke-linejoin="round"/>';
+    if(!s.dash)s.values.forEach(function(v,i){if(v!=null)g+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(v).toFixed(1)+'" r="2.6" fill="'+s.color+'"><title>'+esc(o.labels[i])+': '+fmt(v)+' kg</title></circle>'})});
+  (o.marks||[]).forEach(function(mk){g+='<circle cx="'+X(mk.i).toFixed(1)+'" cy="'+(T+4)+'" r="4.5" fill="#2f8f6b"><title>'+esc(mk.t)+'</title></circle>'});
+  var step=Math.ceil(n/7);o.labels.forEach(function(lb,i){if(i%step===0)g+='<text x="'+X(i)+'" y="'+(H-7)+'" text-anchor="middle" class="ax">'+esc(lb)+'</text>'});
+  return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(o.title||'Gráfica')+'">'+g+'</svg>'+legend(o.series.concat(o.marks&&o.marks.length?[{name:'Llegada de P.O.',color:'#2f8f6b'}]:[]))}
+
+/* ================= UI BASE ================= */
+var ICON={res:'<path d="M4 13h6V4H4zM14 20h6v-9h-6zM4 20h6v-3H4zM14 7h6V4h-6z"/>',plan:'<path d="M4 20V10M10 20V5M16 20v-7M21 20H3"/>',cons:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',po:'<path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6"/>',cal:'<path d="M4 6h16v15H4zM4 10h16M8 3v4M16 3v4"/>',cfg:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>'};
+var TABS=[['res','Resumen'],['plan','Plan'],['cons','Consumo'],['po','P.O.'],['cal','Calendario'],['cfg','Ajustes']];
+var toastT;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2400)}
+function render(){
+  var ae=document.activeElement,key=ae&&ae.getAttribute?ae.getAttribute('data-plan'):null;
+  if(UI.mat!=='all'&&!matById(UI.mat))UI.mat='all';
+  $('#matSel').innerHTML='<option value="all">Todos los materiales</option>'+S.materiales.map(function(m){return '<option value="'+esc(m.id)+'"'+(m.id===UI.mat?' selected':'')+'>'+esc(m.nombre)+'</option>'}).join('');
+  $('#sub').innerHTML=esc(S.config.planta||'Fabricación de moldes')+(S.ejemplo?'<span class="tagEj">EJEMPLO</span>':'');
+  $('#tabs').innerHTML=TABS.map(function(t){return '<button data-a="tab" data-t="'+t[0]+'" class="'+(UI.tab===t[0]?'on':'')+'"><svg viewBox="0 0 24 24">'+ICON[t[0]]+'</svg>'+t[1]+'</button>'}).join('');
+  var v={res:vRes,plan:vPlan,cons:vCons,po:vPO,cal:vCal,cfg:vCfg}[UI.tab]||vRes;
+  $('#main').innerHTML=v();
+  if(key){var el=document.querySelector('[data-plan="'+key+'"]');if(el){el.focus();try{el.select()}catch(e){}}}
+  paintSync();saveUI();
+}
+function kpi(l,v,s,c){return '<div class="kpi '+(c||'')+'"><span>'+l+'</span><b>'+v+'</b><small>'+(s||'&nbsp;')+'</small></div>'}
+function exBanner(){return S.ejemplo?'<div class="alert info"><b>Estás viendo datos de ejemplo.</b> Explora la app y cuando estés listo empieza en blanco o ajusta estos datos a tu planta.<div class="row"><button class="btn sm pri" data-a="blankAsk">Empezar en blanco</button><button class="btn sm" data-a="keepEx">Usar estos datos como base</button></div></div>':''}
+
+/* ================= RESUMEN ================= */
+function vRes(){
+  var k=kpis(),t=k.t,ref=k.ref,h=exBanner(),pct=k.eTo?k.rm/k.eTo:0;
+  if(!S.modelos.length)h+='<div class="alert warn">Aún no hay modelos de molde. Agrégalos en <b>Plan</b> para calcular el consumo estimado.</div>';
+  if(k.st<k.min)h+='<div class="alert bad"><b>Stock por debajo del mínimo.</b> Tienes '+fmt(k.st)+' kg y el mínimo es '+fmt(k.min)+' kg.'+(k.pend.length?' Próxima entrega: '+fdate(k.next)+'.':' No hay P.O. abiertas.')+'</div>';
+  else if(k.pj.bajoMin){
+    if(k.sug<=t)h+='<div class="alert bad"><b>Coloca una P.O. hoy.</b> Con el consumo estimado y las P.O. abiertas, el stock bajaría del mínimo el <b>'+fdate(k.pj.bajoMin)+'</b> (lead time '+k.lead+' días). Cantidad sugerida: <b>'+fmt(k.sugKg)+' kg</b>'+(ref?' ('+fmt(Math.ceil(k.sugKg/ref))+' sacos)':'')+' para 30 días.</div>';
+    else h+='<div class="alert warn">Siguiente P.O. sugerida a más tardar el <b>'+fdate(k.sug)+'</b>: el stock bajaría del mínimo el '+fdate(k.pj.bajoMin)+'. Cantidad sugerida: <b>'+fmt(k.sugKg)+' kg</b>'+(ref?' ('+fmt(Math.ceil(k.sugKg/ref))+' sacos)':'')+'.</div>';
+  } else h+='<div class="alert ok">Con el stock actual y las P.O. abiertas no bajas del mínimo en los próximos 400 días.</div>';
+  h+='<div class="kpis">'+
+    kpi('Stock actual',fmt(k.st)+' kg',(ref?fmt(k.st/ref)+' sacos · ':'')+'mín. '+fmt(k.min)+' kg',k.st<k.min?'red':'')+
+    kpi('Estimado '+MESL[k.m],fmt(k.em)+' kg',sacosTxt(k.em,ref)||'consumo planeado')+
+    kpi('Real '+MESL[k.m]+' a la fecha',fmt(k.rm)+' kg','vs '+fmt(k.eTo)+' kg estimado · '+fmt(pct*100)+'%',pct>1.1?'red':'')+
+    kpi('Estimado anual '+k.y,fmt(k.anual/1000,1)+' t',fmt(k.anual)+' kg'+(ref?' · '+fmt(k.anual/ref)+' sacos':''))+
+    kpi('Cobertura',k.cob==null?'+400 días':fmt(k.cob)+' días',k.cobSin==null?'sin nuevas compras: +400 d':'sin nuevas compras: '+fmt(k.cobSin)+' d · '+fdate(k.pj.ceroSin),k.cob!=null&&k.cob<k.lead?'red':'')+
+    kpi('P.O. abiertas',k.pend.length,k.pend.length?fmt(k.pendKgT)+' kg · próx. '+fdateS(k.next):'sin pendientes')+'</div>';
+  var ws=wkStart(t),sem=semanas(addD(ws,-56),addD(ws,28));
+  h+='<div class="cols2"><div class="card"><h2>Comportamiento semanal</h2><p class="hint">Kg por semana: 8 anteriores, la actual (sombreada) y 4 siguientes.</p>'+
+    barChart({title:'Semanal',labels:sem.map(function(r){return r.label}),hl:sem.findIndex(function(r){return r.cur}),series:[{name:'Estimado',color:'#8ea3bf',values:sem.map(function(r){return r.est})},{name:'Real',color:'#d9822b',values:sem.map(function(r){return r.real})},{name:'Recibido (P.O.)',color:'#2f8f6b',values:sem.map(function(r){return r.rec})}]})+'</div>';
+  var lbl=[],vals=[],mn=[],marks=[];for(var i=0;i<=13;i++){var d=addD(t,i*7);lbl.push(fdateS(d));vals.push(k.pj.map[d]);mn.push(k.min);if(i>0){var sum=0,prev=addD(t,(i-1)*7);for(var dd in k.pj.arr){if(dd>prev&&dd<=d)sum+=k.pj.arr[dd]}if(sum>0)marks.push({i:i,t:'Llega(n) '+fmt(sum)+' kg'})}}
+  h+='<div class="card"><h2>Proyección de stock (13 semanas)</h2><p class="hint">Stock estimado con el plan de consumo y las entregas de P.O. abiertas.</p>'+lineChart({title:'Proyección',labels:lbl,marks:marks,series:[{name:'Stock proyectado',color:'#1f4e8c',values:vals},{name:'Stock mínimo',color:'#c2410c',values:mn,dash:1,line:1}]})+'</div></div>';
+  var ms=meses(k.y);
+  h+='<div class="card"><div class="row"><h2 class="sp">Comportamiento mensual '+k.y+'</h2><button class="btn sm" data-a="xls">⬇ Descargar Excel</button></div><p class="hint">Estimado del plan contra consumo real y yeso recibido.</p>'+
+    barChart({title:'Mensual',h:200,labels:ms.map(function(r){return r.label}),hl:ms.findIndex(function(r){return r.cur}),series:[{name:'Estimado',color:'#8ea3bf',values:ms.map(function(r){return r.est})},{name:'Real',color:'#d9822b',values:ms.map(function(r){return r.real})},{name:'Recibido (P.O.)',color:'#2f8f6b',values:ms.map(function(r){return r.rec})}]})+
+    '<div class="tblwrap" style="margin-top:10px"><table><thead><tr><th>Mes</th><th>Estimado kg</th><th>Real kg</th><th>Dif. kg</th><th>%</th><th>Recibido kg</th><th>Stock fin de mes</th></tr></thead><tbody>'+
+    ms.map(function(r){return '<tr><td'+(r.cur?' class="cur"':'')+'>'+MESL[r.m]+'</td><td>'+fmt(r.est)+'</td><td>'+fmt(r.real)+'</td><td>'+fmt(r.real-r.est)+'</td><td>'+(r.est?fmt(r.real/r.est*100):'0')+'%</td><td>'+fmt(r.rec)+'</td><td>'+(r.stock==null?'—':fmt(r.stock)+(r.tipo==='Proyectado'?'<small>proyectado</small>':''))+'</td></tr>'}).join('')+
+    '</tbody></table></div></div>';
+  return h;
+}
+
+/* ================= PLAN ================= */
+function vPlan(){
+  var y=UI.year,ms=mods(),ref=kgSacoRef(),t=today(),cy=+t.slice(0,4),cm=+t.slice(5,7)-1;
+  var tot=MES.map(function(_,i){return estMes(y,i)}),anual=tot.reduce(function(a,b){return a+b},0);
+  var h='<div class="card"><div class="row"><div class="nav3"><button class="btn sm" data-a="year" data-d="-1">‹</button><b>Plan '+y+'</b><button class="btn sm" data-a="year" data-d="1">›</button></div><span class="sp"></span><button class="btn sm pri" data-a="newMod">+ Modelo</button></div></div>';
+  h+='<div class="kpis">'+kpi(y===cy?'Estimado '+MESL[cm]:'Promedio mensual',fmt(y===cy?tot[cm]:anual/12)+' kg',sacosTxt(y===cy?tot[cm]:anual/12,ref))+kpi('Estimado anual',fmt(anual/1000,1)+' t',fmt(anual)+' kg')+kpi('Sacos al año',ref?fmt(anual/ref):'—',ref?'de '+ref+' kg':'materiales con distinto saco')+
+    kpi('Moldes al año',fmt(ms.reduce(function(a,md){var s=0;for(var i=0;i<12;i++)s+=moldesPlan(md,y,i);return a+s},0)),ms.length+' modelos')+kpi('Merma aplicada',fmt(num(S.config.merma),1)+'%','se ajusta en Ajustes')+kpi('Prom. por día laboral',fmt(y===cy&&laborables(cy,cm)?tot[cm]/laborables(cy,cm):0)+' kg',y===cy?MESL[cm]:'')+'</div>';
+  h+='<div class="card"><h2>Moldes planeados por mes</h2><p class="hint">Cada celda vacía usa la base mensual del modelo. Escribe un número para ajustar un mes en particular (se marca en amarillo). Toca el nombre del modelo para editarlo.</p>'+
+    '<div class="formula">Kg estimado del mes = Σ (moldes del mes × kg de yeso por molde) × (1 + merma '+fmt(num(S.config.merma),1)+'%). El estimado diario reparte el mes entre los días laborables.</div>';
+  if(!ms.length)h+='<div class="empty">No hay modelos'+(UI.mat!=='all'?' para este material':'')+'. Agrega uno con <b>+ Modelo</b>.</div>';
+  else{
+    h+='<div class="tblwrap"><table><thead><tr><th>Modelo</th><th>Kg/molde</th><th>Base/mes</th>'+MES.map(function(m,i){return '<th'+(y===cy&&i===cm?' class="cur"':'')+'>'+m+'</th>'}).join('')+'<th>Moldes año</th><th>Kg año</th></tr></thead><tbody>';
+    ms.forEach(function(md){var ov=(S.plan[y]&&S.plan[y][md.id])||{},sm=0,mt=matById(md.materialId);
+      h+='<tr><td><button class="lnk" data-a="editMod" data-id="'+esc(md.id)+'">'+esc(md.nombre)+'</button><small>'+esc(mt?mt.nombre:'(sin material)')+'</small></td><td>'+fmt(num(md.kgPorMolde),1)+'</td><td>'+fmt(num(md.moldesMes))+'</td>';
+      for(var i=0;i<12;i++){var v=ov[i];sm+=moldesPlan(md,y,i);h+='<td'+(y===cy&&i===cm?' class="cur"':'')+'><input class="pc" type="number" inputmode="decimal" min="0" data-plan="'+esc(md.id)+'|'+i+'" value="'+(v===undefined||v===null||v===''?'':esc(v))+'" placeholder="'+fmt(num(md.moldesMes))+'" aria-label="'+esc(md.nombre)+' '+MESL[i]+'"></td>'}
+      h+='<td>'+fmt(sm)+'</td><td>'+fmt(sm*kgMolde(md))+'</td></tr>'});
+    h+='</tbody><tbody><tr class="tot"><td>Kg estimado</td><td></td><td></td>'+tot.map(function(v){return '<td>'+fmt(v)+'</td>'}).join('')+'<td></td><td>'+fmt(anual)+'</td></tr>'+
+      (ref?'<tr class="tot"><td>Sacos ('+ref+' kg)</td><td></td><td></td>'+tot.map(function(v){return '<td>'+fmt(v/ref)+'</td>'}).join('')+'<td></td><td>'+fmt(anual/ref)+'</td></tr>':'')+
+      '<tr class="tot"><td>Toneladas</td><td></td><td></td>'+tot.map(function(v){return '<td>'+fmt(v/1000,1)+'</td>'}).join('')+'<td></td><td>'+fmt(anual/1000,1)+'</td></tr></tbody></table></div>'+
+      '<div class="row" style="margin-top:10px"><button class="btn sm ghost" data-a="resetYear">Quitar ajustes de '+y+'</button></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+/* ================= CONSUMOS ================= */
+function consFields(){return [
+  {k:'fecha',l:'Fecha',t:'date',req:1},
+  {k:'modeloId',l:'Modelo de molde',t:'select',o:[{v:'',t:'— Directo (sin modelo) —'}].concat(S.modelos.map(function(m){return {v:m.id,t:m.nombre}}))},
+  {k:'moldes',l:'Moldes fabricados',t:'number',step:'1'},
+  {k:'materialId',l:'Material',t:'select',o:S.materiales.map(function(m){return {v:m.id,t:m.nombre}})},
+  {k:'kg',l:'Kg de yeso usados',t:'number',step:'0.1',req:1,hint:'Se sugiere con kg/molde + merma; puedes corregirlo'},
+  {k:'sacos',l:'Equivale a sacos',t:'number',step:'0.01'},
+  {k:'nota',l:'Nota',t:'text',w:1}]}
+function consLink(root,name){
+  function g(n){return root.querySelector('[name="'+n+'"]')}
+  var md=modById(g('modeloId').value),mat;
+  if(name==='modeloId'||name==='moldes'){if(md){g('materialId').value=md.materialId;var n=num(g('moldes').value);if(name==='modeloId'&&!n){g('moldes').value=1;n=1}g('kg').value=Math.round(n*kgMolde(md)*10)/10}}
+  mat=matById(g('materialId').value);var ks=num(mat&&mat.kgSaco);
+  if(name==='sacos'){g('kg').value=Math.round(num(g('sacos').value)*ks*10)/10}
+  else if(ks){g('sacos').value=Math.round(num(g('kg').value)/ks*100)/100}
+}
+function consVals(c){var mat=matById(c.materialId),ks=num(mat&&mat.kgSaco);return {fecha:c.fecha,modeloId:c.modeloId||'',moldes:c.moldes||'',materialId:c.materialId,kg:c.kg,sacos:ks?Math.round(num(c.kg)/ks*100)/100:'',nota:c.nota||''}}
+function consFromForm(d){var md=modById(d.modeloId);return {fecha:d.fecha,modeloId:md?md.id:'',materialId:md?md.materialId:d.materialId,moldes:num(d.moldes),kg:num(d.kg),nota:String(d.nota||'').trim()}}
+function vCons(){
+  var t=today(),m=UI.consMonth,y=+m.slice(0,4),mi=+m.slice(5,7)-1,a=m+'-01',b=m+'-'+pad(dim(y,mi)),ms=idx().ms;
+  var md=modById(UI.lastMod)||S.modelos[0],d0={fecha:t,modeloId:md?md.id:'',moldes:md?1:'',materialId:md?md.materialId:(S.materiales[0]||{}).id,kg:md?Math.round(kgMolde(md)*10)/10:''};
+  var mt=matById(d0.materialId);d0.sacos=mt&&num(mt.kgSaco)&&d0.kg?Math.round(d0.kg/num(mt.kgSaco)*100)/100:'';
+  var h='<div class="card" data-form="cons"><h2>Registrar consumo</h2><p class="hint">Captura el yeso usado al fabricar moldes. Si eliges un modelo, los kg se calculan solos.</p><div class="grid g4">'+consFields().map(function(f){return fH(f,d0[f.k])}).join('')+'</div><div class="row" style="margin-top:12px"><span class="sp"></span><button class="btn pri" data-a="addCons">Registrar consumo</button></div></div>';
+  var list=S.consumos.filter(function(c){return ms[c.materialId]&&c.fecha>=a&&c.fecha<=b}).sort(function(x,z){return x.fecha<z.fecha?1:x.fecha>z.fecha?-1:0});
+  var real=list.reduce(function(s,c){return s+num(c.kg)},0),est=estMes(y,mi),moldes=list.reduce(function(s,c){return s+num(c.moldes)},0),ref=kgSacoRef();
+  h+='<div class="card"><div class="row"><div class="nav3"><button class="btn sm" data-a="consM" data-d="-1">‹</button><b>'+MESL[mi]+' '+y+'</b><button class="btn sm" data-a="consM" data-d="1">›</button></div></div>'+
+    '<div class="kpis" style="margin:12px 0 4px">'+kpi('Real del mes',fmt(real)+' kg',sacosTxt(real,ref))+kpi('Estimado del mes',fmt(est)+' kg',est?fmt(real/est*100)+'% consumido':'')+kpi('Moldes registrados',fmt(moldes),list.length+' registros')+'</div>';
+  if(!list.length)h+='<div class="empty">Sin consumos registrados en este mes.</div>';
+  var cur='';list.forEach(function(c){if(c.fecha!==cur){cur=c.fecha;var dd=list.filter(function(x){return x.fecha===cur}).reduce(function(s,x){return s+num(x.kg)},0);h+='<div class="dayh">'+DIAS[dow(cur)]+' '+fdate(cur)+' · '+fmt(dd)+' kg</div>'}
+    var mo=modById(c.modeloId),mt=matById(c.materialId);
+    h+='<div class="li"><div class="m"><b>'+esc(mo?mo.nombre:'Consumo directo')+'</b><small>'+(c.moldes?fmt(num(c.moldes))+' moldes · ':'')+esc(mt?mt.nombre:'')+(c.nota?' · '+esc(c.nota):'')+'</small></div><div class="v"><b>'+fmt(num(c.kg),1)+' kg</b><div class="row" style="justify-content:flex-end;margin-top:4px"><button class="btn sm" data-a="editCons" data-id="'+c.id+'">Editar</button><button class="btn sm ghost" data-a="delCons" data-id="'+c.id+'">✕</button></div></div></div>'});
+  return h+'</div>';
+}
+
+/* ================= P.O. ================= */
+function poFields(){return [
+  {k:'numero',l:'Número de P.O.',t:'text',req:1},
+  {k:'proveedor',l:'Proveedor',t:'text'},
+  {k:'materialId',l:'Material',t:'select',o:S.materiales.map(function(m){return {v:m.id,t:m.nombre+' (saco '+fmt(num(m.kgSaco))+' kg)'}})},
+  {k:'sacos',l:'Cantidad solicitada (sacos)',t:'number',step:'1',req:1},
+  {k:'fechaSol',l:'Fecha de solicitud',t:'date',req:1},
+  {k:'fechaEsp',l:'Fecha de entrega esperada',t:'date',req:1},
+  {k:'estado',l:'Estado',t:'select',o:[{v:'activa',t:'Activa'},{v:'cancelada',t:'Cancelada'}]},
+  {k:'nota',l:'Nota',t:'text'}]}
+function vPO(){
+  var t=today(),ms=idx().ms,F=UI.poF,ref=kgSacoRef();
+  var all=S.pos.filter(function(p){return ms[p.materialId]});
+  var list=all.filter(function(p){var s=poStatus(p);return F==='todas'||(F==='abiertas'&&(s==='Pendiente'||s==='Atrasada'||s==='Parcial'))||(F==='recibidas'&&s==='Recibida')||(F==='canceladas'&&s==='Cancelada')});
+  list.sort(function(a,b){var oa=pendKg(a)>0,ob=pendKg(b)>0;if(oa!==ob)return oa?-1:1;return oa?(a.fechaEsp<b.fechaEsp?-1:1):(a.fechaEsp<b.fechaEsp?1:-1)});
+  var open=all.filter(function(p){return pendKg(p)>0}),late=open.filter(function(p){return p.fechaEsp<t});
+  var h='<div class="kpis">'+kpi('P.O. abiertas',open.length,fmt(open.reduce(function(s,p){return s+pendKg(p)},0))+' kg por recibir')+kpi('Atrasadas',late.length,late.length?'revisa con el proveedor':'todo en tiempo',late.length?'red':'grn')+
+    kpi('Recibido este mes',fmt(sumRange(idx().rec,t.slice(0,8)+'01',t))+' kg',sacosTxt(sumRange(idx().rec,t.slice(0,8)+'01',t),ref))+'</div>';
+  h+='<div class="card"><div class="row"><div class="seg">'+[['abiertas','Abiertas'],['recibidas','Recibidas'],['canceladas','Canceladas'],['todas','Todas']].map(function(x){return '<button data-a="poF" data-f="'+x[0]+'" class="'+(F===x[0]?'on':'')+'">'+x[1]+'</button>'}).join('')+'</div><span class="sp"></span><button class="btn pri" data-a="newPO">+ Nueva P.O.</button></div><div style="margin-top:12px">';
+  if(!list.length)h+='<div class="empty">No hay órdenes de compra en esta vista.</div>';
+  list.forEach(function(p){var st=poStatus(p),rec=poRec(p),ks=poKgSaco(p),mt=matById(p.materialId),pc=num(p.sacos)?Math.min(100,rec/num(p.sacos)*100):0,dd=diffDays(t,p.fechaEsp);
+    var when=st==='Recibida'||st==='Cancelada'?'':(dd>0?' · en '+dd+' días':dd===0?' · <b>hoy</b>':' · <b style="color:#c2410c">'+(-dd)+' días de atraso</b>');
+    h+='<div class="pcard"><div class="t"><b>'+esc(p.numero)+'</b><span class="bd '+st+'">'+st+'</span></div><div class="meta">'+esc(p.proveedor||'Sin proveedor')+' · '+esc(mt?mt.nombre:'')+'<br>Solicitada '+fdate(p.fechaSol)+' · Entrega esperada <b>'+fdate(p.fechaEsp)+'</b>'+when+'<br>'+fmt(num(p.sacos))+' sacos ('+fmt(num(p.sacos)*ks)+' kg) · recibido '+fmt(rec)+' sacos'+(p.nota?'<br><i>'+esc(p.nota)+'</i>':'')+'</div><div class="pg"><i style="width:'+pc+'%"></i></div>';
+    if(p.recibos.length)h+='<div class="recs">'+p.recibos.slice().sort(function(a,b){return a.fecha<b.fecha?-1:1}).map(function(r){return '<span>'+fdate(r.fecha)+' · '+fmt(num(r.sacos))+' sacos<button data-a="delRec" data-po="'+p.id+'" data-id="'+r.id+'" aria-label="Quitar recepción">×</button></span>'}).join('')+'</div>';
+    h+='<div class="row">'+(st!=='Recibida'&&st!=='Cancelada'?'<button class="btn sm grn" data-a="recPO" data-id="'+p.id+'">Registrar recepción</button>':'')+'<button class="btn sm" data-a="editPO" data-id="'+p.id+'">Editar</button><button class="btn sm ghost" data-a="delPO" data-id="'+p.id+'">Eliminar</button></div></div>'});
+  return h+'</div></div>';
+}
+
+/* ================= CALENDARIO ================= */
+function calEvents(){var ms=idx().ms,t=today(),o={};function push(d,x){if(!d)return;(o[d]=o[d]||[]).push(x)}
+  S.pos.forEach(function(p){if(!ms[p.materialId])return;var st=poStatus(p),ks=poKgSaco(p);
+    push(p.fechaSol,{c:'sol',txt:'Sol. '+p.numero,p:p,k:'Solicitud de P.O.',q:fmt(num(p.sacos))+' sacos ('+fmt(num(p.sacos)*ks)+' kg)'});
+    if(st!=='Recibida'&&st!=='Cancelada'){var pend=num(p.sacos)-poRec(p);push(p.fechaEsp,{c:p.fechaEsp<t?'atr':'esp',txt:'Ent. '+p.numero,p:p,k:p.fechaEsp<t?'Entrega atrasada':'Entrega esperada',q:fmt(pend)+' sacos pendientes ('+fmt(pend*ks)+' kg)'})}
+    p.recibos.forEach(function(r){push(r.fecha,{c:'rec',txt:'Rec. '+p.numero,p:p,k:'Recibido',q:fmt(num(r.sacos))+' sacos ('+fmt(num(r.sacos)*ks)+' kg)'})})});return o}
+function vCal(){
+  var p=UI.calMonth.split('-').map(Number),y=p[0],m=p[1],first=y+'-'+pad(m)+'-01',s=wkStart(first),t=today(),ev=calEvents(),off=diffDays(s,first),rows=Math.ceil((off+dim(y,m-1))/7);
+  var h='<div class="card"><div class="row"><div class="nav3"><button class="btn sm" data-a="calM" data-d="-1">‹</button><b>'+MESL[m-1]+' '+y+'</b><button class="btn sm" data-a="calM" data-d="1">›</button></div><button class="btn sm" data-a="calHoy">Hoy</button><span class="sp"></span><button class="btn pri sm" data-a="newPO" data-d="'+UI.calSel+'">+ Nueva P.O.</button></div>'+
+    '<div class="lg"><span><i style="background:#8a94a6"></i>Solicitud</span><span><i style="background:#1f4e8c"></i>Entrega esperada</span><span><i style="background:#c2410c"></i>Atrasada</span><span><i style="background:#2f8f6b"></i>Recibido</span></div><div class="cal">'+
+    ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(function(d){return '<div class="dh">'+d+'</div>'}).join('');
+  for(var i=0;i<rows*7;i++){var d=addD(s,i),e=ev[d]||[];h+='<div class="cd'+(d.slice(0,7)===UI.calMonth?'':' o')+(d===t?' t':'')+(d===UI.calSel?' s':'')+'" data-a="calDay" data-d="'+d+'"><b>'+(+d.slice(8))+'</b>'+e.slice(0,3).map(function(x){return '<span class="ev '+x.c+'">'+esc(x.txt)+'</span>'}).join('')+(e.length>3?'<span class="more">+'+(e.length-3)+'</span>':'')+'</div>'}
+  h+='</div></div>';
+  var sel=ev[UI.calSel]||[];
+  h+='<div class="card"><h2>'+DIAS[dow(UI.calSel)]+' '+fdate(UI.calSel)+'</h2>';
+  if(!sel.length)h+='<div class="empty">Sin movimientos de P.O. este día.</div>';
+  sel.forEach(function(x){var st=poStatus(x.p);h+='<div class="li"><div class="m"><b>'+esc(x.p.numero)+'</b> <span class="bd '+st+'">'+st+'</span><small>'+x.k+' · '+x.q+'<br>'+esc(x.p.proveedor||'')+' · '+esc((matById(x.p.materialId)||{}).nombre||'')+'</small></div><div class="v">'+(st!=='Recibida'&&st!=='Cancelada'?'<button class="btn sm grn" data-a="recPO" data-id="'+x.p.id+'">Recibir</button>':'')+'</div></div>'});
+  h+='</div>';
+  var a=first,b=y+'-'+pad(m)+'-'+pad(dim(y,m-1)),ms=idx().ms,sol=0,rec=0,esp=0;
+  S.pos.forEach(function(p){if(!ms[p.materialId]||p.cancelada)return;var ks=poKgSaco(p);if(p.fechaSol>=a&&p.fechaSol<=b)sol+=num(p.sacos)*ks;if(p.fechaEsp>=a&&p.fechaEsp<=b)esp+=pendKg(p);p.recibos.forEach(function(r){if(r.fecha>=a&&r.fecha<=b)rec+=num(r.sacos)*ks})});
+  h+='<div class="kpis">'+kpi('Solicitado en el mes',fmt(sol)+' kg',sacosTxt(sol))+kpi('Recibido en el mes',fmt(rec)+' kg',sacosTxt(rec))+kpi('Pendiente con entrega en el mes',fmt(esp)+' kg',sacosTxt(esp))+kpi('Consumo estimado del mes',fmt(estMes(y,m-1))+' kg',sacosTxt(estMes(y,m-1)))+'</div>';
+  return h;
+}
+
+/* ================= AJUSTES ================= */
+function vCfg(){
+  var c=S.config,sc=Sync.cfg,t=today();
+  var h='<div class="card"><div class="row"><h2 class="sp">Materiales (tipos de yeso)</h2><button class="btn sm pri" data-a="newMat">+ Material</button></div><p class="hint">El stock inicial es el conteo físico en una fecha; a partir de ahí se suman las recepciones y se restan los consumos.</p>';
+  S.materiales.forEach(function(m){var st=stockAt(t,[m]);h+='<div class="li"><div class="m"><b>'+esc(m.nombre)+'</b><small>Saco de '+fmt(num(m.kgSaco))+' kg · stock inicial '+fmt(num(m.stockIni))+' kg al '+fdate(m.fechaIni)+' · mínimo '+fmt(num(m.minimo))+' kg</small></div><div class="v"><b>'+fmt(st)+' kg</b><div class="row" style="justify-content:flex-end;margin-top:4px"><button class="btn sm" data-a="editMat" data-id="'+m.id+'">Editar</button><button class="btn sm ghost" data-a="delMat" data-id="'+m.id+'">✕</button></div></div></div>'});
+  h+='</div><div class="card" id="cfgForm"><h2>Parámetros de cálculo</h2><div class="grid">'+
+    fH({k:'planta',l:'Nombre del área / planta',t:'text'},c.planta)+fH({k:'merma',l:'Merma de yeso (%)',t:'number',step:'0.1',hint:'Desperdicio extra sobre el yeso teórico'},c.merma)+fH({k:'leadTime',l:'Lead time del proveedor (días)',t:'number',step:'1',hint:'Días entre colocar la P.O. y recibir'},c.leadTime)+
+    '</div><p class="hint" style="margin-top:12px">Días laborables (se usan para repartir el consumo del mes por día y por semana)</p><div class="chk">'+[1,2,3,4,5,6,0].map(function(d){return '<label><input type="checkbox" name="dl'+d+'"'+(c.diasLab.indexOf(d)>=0?' checked':'')+'>'+DIAS[d]+'</label>'}).join('')+
+    '</div><div class="row" style="margin-top:12px"><span class="sp"></span><button class="btn pri" data-a="saveCfg">Guardar parámetros</button></div></div>';
+  h+='<div class="card"><h2>Respaldo de datos</h2><p class="hint">Los datos se guardan en este navegador. Descarga un respaldo seguido, o usa la sincronización de abajo para ver lo mismo en tu lap y tu celular.</p><div class="row"><button class="btn" data-a="bk">⬇ Descargar respaldo (.json)</button><button class="btn" data-a="imp">⬆ Importar respaldo</button><button class="btn" data-a="xls">⬇ Excel</button></div><div class="row" style="margin-top:10px"><button class="btn sm" data-a="exAsk">Cargar datos de ejemplo</button><button class="btn sm ghost" data-a="blankAsk">Borrar todo y empezar en blanco</button></div></div>';
+  h+='<div class="card" id="syncForm"><h2>Sincronizar lap y celular (Firebase, opcional)</h2><p class="hint">Usa una <b>Realtime Database</b> de tu proyecto de Firebase. Los cambios se suben solos y cada dispositivo baja la versión más reciente al abrir la app.</p><div class="grid">'+
+    fH({k:'url',l:'URL de la Realtime Database',t:'text',w:1,ph:'https://tu-proyecto-default-rtdb.firebaseio.com'},sc.url||'')+fH({k:'path',l:'Nombre del espacio de datos',t:'text',ph:'consumoYeso'},sc.path||'consumoYeso')+fH({k:'auth',l:'Clave (opcional)',t:'text',hint:'Solo si tus reglas lo piden'},sc.auth||'')+
+    '</div><div class="chk" style="margin-top:10px"><label><input type="checkbox" name="on"'+(sc.on?' checked':'')+'>Activar sincronización</label></div><div class="row" style="margin-top:12px"><span id="syncMsg" class="note sp"></span><button class="btn" data-a="syncDown">Bajar de la nube</button><button class="btn pri" data-a="syncSave">Guardar y conectar</button></div></div>';
+  h+='<p class="note" style="text-align:center">Consumo de Yeso · v1 · Los datos de este archivo no salen de tu dispositivo salvo que actives la sincronización.</p>';
+  return h;
+}
+
+/* ================= FORMULARIOS / MODAL ================= */
+function fH(f,v){var val=v==null?'':v,inp;
+  if(f.t==='select')inp='<select name="'+f.k+'">'+f.o.map(function(o){return '<option value="'+esc(o.v)+'"'+(String(o.v)===String(val)?' selected':'')+'>'+esc(o.t)+'</option>'}).join('')+'</select>';
+  else if(f.t==='textarea')inp='<textarea name="'+f.k+'" rows="2">'+esc(val)+'</textarea>';
+  else inp='<input name="'+f.k+'" type="'+f.t+'"'+(f.t==='number'?' inputmode="decimal" step="'+(f.step||'any')+'" min="0"':'')+' value="'+esc(val)+'"'+(f.ph?' placeholder="'+esc(f.ph)+'"':'')+(f.t==='text'?' autocomplete="off"':'')+'>';
+  return '<label class="f'+(f.w?' w':'')+'"><span>'+esc(f.l)+(f.req?' *':'')+'</span>'+inp+(f.hint?'<em>'+esc(f.hint)+'</em>':'')+'</label>'}
+function readForm(root){var o={};root.querySelectorAll('[name]').forEach(function(el){o[el.name]=el.type==='checkbox'?el.checked:el.value});return o}
+var mInput=null,mBtns=[];
+function openModal(title,body,btns){var m=$('#modal');mBtns=btns;m.innerHTML='<div class="mbox" role="dialog" aria-modal="true"><div class="mh"><h3>'+esc(title)+'</h3><button class="x" data-a="closeM" aria-label="Cerrar">×</button></div><div class="mb">'+body+'</div><div class="merr"></div><div class="mf">'+btns.map(function(b,i){return '<button class="btn '+(b.c||'')+'" data-mb="'+i+'">'+esc(b.t)+'</button>'}).join('')+'</div></div>';m.hidden=false}
+function closeModal(){var m=$('#modal');m.hidden=true;m.innerHTML='';mInput=null}
+function openForm(title,fields,vals,onSave,onInput,extra){mInput=onInput||null;openModal(title,'<div class="grid">'+fields.map(function(f){return fH(f,vals[f.k])}).join('')+'</div>'+(extra||''),[{t:'Cancelar'},{t:'Guardar',c:'pri',fn:function(box){var d=readForm(box),miss=fields.filter(function(f){return f.req&&String(d[f.k]==null?'':d[f.k]).trim()===''});if(miss.length){box.querySelector('.merr').textContent='Falta: '+miss.map(function(f){return f.l}).join(', ');return false}return onSave(d,box)}}])}
+function confirmBox(msg,yes,txt){openModal('Confirmar','<p style="margin:0;line-height:1.5">'+msg+'</p>',[{t:'Cancelar'},{t:txt||'Sí, continuar',c:'dan',fn:function(){yes()}}])}
+function err(box,m){box.querySelector('.merr').textContent=m;return false}
+
+function matForm(m){var isNew=!m;m=m||{nombre:'',kgSaco:25,stockIni:0,fechaIni:today(),minimo:0};
+  openForm(isNew?'Nuevo material':'Editar material',[{k:'nombre',l:'Nombre (tipo de yeso)',t:'text',req:1,w:1},{k:'kgSaco',l:'Kg por saco',t:'number',step:'0.1',req:1},{k:'minimo',l:'Stock mínimo (kg)',t:'number',step:'1'},{k:'stockIni',l:'Stock inicial / conteo físico (kg)',t:'number',step:'0.1',req:1},{k:'fechaIni',l:'Fecha del conteo',t:'date',req:1}],m,
+  function(d,box){if(num(d.kgSaco)<=0)return err(box,'Los kg por saco deben ser mayores a 0');var o=isNew?{id:uid()}:m;o.nombre=d.nombre.trim();o.kgSaco=num(d.kgSaco);o.minimo=num(d.minimo);o.stockIni=num(d.stockIni);o.fechaIni=d.fechaIni;if(isNew)S.materiales.push(o);save();render();toast('Material guardado')})}
+function modForm(md){var isNew=!md;md=md||{nombre:'',materialId:(S.materiales[0]||{}).id,kgPorMolde:'',moldesMes:''};
+  openForm(isNew?'Nuevo modelo de molde':'Editar modelo',[{k:'nombre',l:'Nombre del modelo',t:'text',req:1,w:1},{k:'materialId',l:'Material',t:'select',w:1,o:S.materiales.map(function(m){return {v:m.id,t:m.nombre}})},{k:'kgPorMolde',l:'Kg de yeso por molde',t:'number',step:'0.1',req:1,hint:'Yeso en polvo por molde completo'},{k:'moldesMes',l:'Moldes por mes (base)',t:'number',step:'1',req:1}],md,
+  function(d){var o=isNew?{id:uid()}:md;o.nombre=d.nombre.trim();o.materialId=d.materialId;o.kgPorMolde=num(d.kgPorMolde);o.moldesMes=num(d.moldesMes);if(isNew)S.modelos.push(o);save();render();toast('Modelo guardado')},null,
+  isNew?'':'<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-a="delMod" data-id="'+md.id+'">Eliminar modelo</button></div>')}
+function poForm(p,preDate){var isNew=!p,t=today();var v=p?Object.assign({},p,{estado:p.cancelada?'cancelada':'activa'}):{numero:'',proveedor:(S.pos[S.pos.length-1]||{}).proveedor||'',materialId:UI.mat!=='all'?UI.mat:(S.materiales[0]||{}).id,sacos:'',fechaSol:t,fechaEsp:preDate&&preDate>=t?preDate:addD(t,num(S.config.leadTime)),estado:'activa',nota:''};
+  openForm(isNew?'Nueva orden de compra':'Editar P.O. '+p.numero,poFields(),v,function(d,box){if(d.fechaEsp<d.fechaSol)return err(box,'La entrega no puede ser antes de la solicitud');if(num(d.sacos)<=0)return err(box,'La cantidad debe ser mayor a 0');
+    var o=isNew?{id:uid(),recibos:[]}:p;o.numero=d.numero.trim();o.proveedor=d.proveedor.trim();o.materialId=d.materialId;o.sacos=num(d.sacos);o.fechaSol=d.fechaSol;o.fechaEsp=d.fechaEsp;o.cancelada=d.estado==='cancelada';o.nota=d.nota.trim();if(isNew)S.pos.push(o);save();render();toast('P.O. guardada')},
+  function(box){var g=function(n){return box.querySelector('[name="'+n+'"]')},mt=matById(g('materialId').value);box.querySelector('.merr').textContent=mt?'= '+fmt(num(g('sacos').value)*num(mt.kgSaco))+' kg':''})}
+function recForm(p){var pend=Math.max(0,num(p.sacos)-poRec(p));
+  openForm('Recepción de '+p.numero,[{k:'fecha',l:'Fecha de recepción',t:'date',req:1},{k:'sacos',l:'Sacos recibidos',t:'number',step:'1',req:1,hint:'Pendientes: '+fmt(pend)+' sacos'}],{fecha:today(),sacos:pend},
+  function(d,box){if(num(d.sacos)<=0)return err(box,'La cantidad debe ser mayor a 0');p.recibos.push({id:uid(),fecha:d.fecha,sacos:num(d.sacos)});save();render();toast('Recepción registrada: '+fmt(num(d.sacos))+' sacos')})}
+
+/* ================= ACCIONES ================= */
+function shiftMonth(ym,n){var a=ym.split('-').map(Number),d=new Date(Date.UTC(a[0],a[1]-1+n,1));return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)}
+var A={
+  tab:function(d){UI.tab=d.t;render();window.scrollTo(0,0)},
+  year:function(d){UI.year+=+d.d;render()},
+  consM:function(d){UI.consMonth=shiftMonth(UI.consMonth,+d.d);render()},
+  calM:function(d){UI.calMonth=shiftMonth(UI.calMonth,+d.d);UI.calSel=UI.calMonth+'-01';render()},
+  calHoy:function(){UI.calMonth=today().slice(0,7);UI.calSel=today();render()},
+  calDay:function(d){UI.calSel=d.d;if(d.d.slice(0,7)!==UI.calMonth)UI.calMonth=d.d.slice(0,7);render()},
+  poF:function(d){UI.poF=d.f;render()},
+  closeM:closeModal,
+  newMat:function(){matForm()},editMat:function(d){matForm(matById(d.id))},
+  delMat:function(d){var m=matById(d.id);if(S.materiales.length<2)return toast('Debe quedar al menos un material');var used=S.modelos.some(function(x){return x.materialId===d.id})||S.pos.some(function(x){return x.materialId===d.id})||S.consumos.some(function(x){return x.materialId===d.id});if(used)return toast('Ese material tiene modelos, P.O. o consumos; no se puede borrar');confirmBox('¿Eliminar el material <b>'+esc(m.nombre)+'</b>?',function(){S.materiales=S.materiales.filter(function(x){return x.id!==d.id});save();render()},'Eliminar')},
+  newMod:function(){if(!S.materiales.length)return toast('Primero agrega un material');modForm()},editMod:function(d){modForm(modById(d.id))},
+  delMod:function(d){var md=modById(d.id);confirmBox('¿Eliminar el modelo <b>'+esc(md.nombre)+'</b>? Los consumos registrados se conservan como consumo directo.',function(){S.modelos=S.modelos.filter(function(x){return x.id!==d.id});S.consumos.forEach(function(c){if(c.modeloId===d.id)c.modeloId=''});Object.keys(S.plan).forEach(function(y){delete S.plan[y][d.id]});save();render()},'Eliminar')},
+  resetYear:function(){var y=UI.year;confirmBox('¿Quitar todos los ajustes mensuales de '+y+'? Cada mes volverá a usar la base de su modelo.',function(){if(S.plan[y])mods().forEach(function(md){delete S.plan[y][md.id]});save();render()},'Quitar ajustes')},
+  addCons:function(d,b){var box=b.closest('[data-form]'),f=readForm(box);if(!isDate(f.fecha))return toast('Falta la fecha');if(num(f.kg)<=0)return toast('Indica los kg de yeso');var c=consFromForm(f);if(!c.materialId)return toast('Elige un material');c.id=uid();S.consumos.push(c);UI.lastMod=c.modeloId;UI.consMonth=c.fecha.slice(0,7);save();render();toast('Consumo registrado: '+fmt(c.kg,1)+' kg')},
+  editCons:function(d){var c=S.consumos.find(function(x){return x.id===d.id});if(!c)return;openForm('Editar consumo',consFields(),consVals(c),function(f,box){if(num(f.kg)<=0)return err(box,'Indica los kg de yeso');Object.assign(c,consFromForm(f));save();render();toast('Consumo actualizado')},consLink)},
+  delCons:function(d){var c=S.consumos.find(function(x){return x.id===d.id});confirmBox('¿Eliminar el consumo de '+fmt(num(c.kg),1)+' kg del '+fdate(c.fecha)+'?',function(){S.consumos=S.consumos.filter(function(x){return x.id!==d.id});save();render()},'Eliminar')},
+  newPO:function(d){poForm(null,d.d)},editPO:function(d){poForm(S.pos.find(function(x){return x.id===d.id}))},
+  recPO:function(d){recForm(S.pos.find(function(x){return x.id===d.id}))},
+  delPO:function(d){var p=S.pos.find(function(x){return x.id===d.id});confirmBox('¿Eliminar la P.O. <b>'+esc(p.numero)+'</b> y sus recepciones? Esto cambia el stock calculado.',function(){S.pos=S.pos.filter(function(x){return x.id!==d.id});save();render()},'Eliminar')},
+  delRec:function(d){var p=S.pos.find(function(x){return x.id===d.po}),r=p&&p.recibos.find(function(x){return x.id===d.id});if(!r)return;confirmBox('¿Quitar la recepción de '+fmt(num(r.sacos))+' sacos del '+fdate(r.fecha)+' en '+esc(p.numero)+'?',function(){p.recibos=p.recibos.filter(function(x){return x.id!==d.id});save();render()},'Quitar')},
+  saveCfg:function(){var box=$('#cfgForm'),f=readForm(box),dl=[0,1,2,3,4,5,6].filter(function(n){return f['dl'+n]});if(!dl.length)return toast('Elige al menos un día laborable');S.config.planta=String(f.planta||'').trim();S.config.merma=num(f.merma);S.config.leadTime=num(f.leadTime);S.config.diasLab=dl;save();render();toast('Parámetros guardados')},
+  keepEx:function(){S.ejemplo=false;save();render();toast('Listo, ahora son tus datos')},
+  blankAsk:function(){confirmBox('Se borrarán <b>todos</b> los datos de este dispositivo'+(Sync.url()?' y de la nube':'')+' (materiales, modelos, P.O. y consumos). ¿Continuar?',function(){S=blank();save();UI.tab='cfg';render();toast('Empieza capturando tu material y stock inicial')},'Borrar todo')},
+  exAsk:function(){confirmBox('Se reemplazarán tus datos por datos de ejemplo. ¿Continuar? (Descarga un respaldo antes si lo necesitas.)',function(){S=ejemplo();save();UI.tab='res';render()},'Cargar ejemplo')},
+  bk:function(){dl(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}),'Respaldo-Consumo-Yeso-'+today()+'.json');toast('Respaldo descargado')},
+  imp:function(){$('#impFile').value='';$('#impFile').click()},
+  xls:function(){var ys={},t=+today().slice(0,4);ys[t]=1;ys[t+1]=1;ys[UI.year]=1;S.consumos.forEach(function(c){ys[c.fecha.slice(0,4)]=1});S.pos.forEach(function(p){ys[p.fechaEsp.slice(0,4)]=1});var yl=Object.keys(ys).sort();
+    openForm('Descargar Excel',[{k:'y',l:'Año',t:'select',w:1,o:yl.map(function(y){return {v:y,t:y}})}],{y:String(UI.year)},function(f){try{exportExcel(+f.y);toast('Excel descargado')}catch(e){toast('No se pudo generar el Excel: '+e.message)}},null,
+    '<p class="note">Incluye hojas de Resumen, Plan, Mensual, Semanal (con gráficas), Órdenes P.O., Recepciones, Consumos y Modelos. Material: <b>'+esc(UI.mat==='all'?'todos':(matById(UI.mat)||{}).nombre)+'</b> (cámbialo arriba si quieres solo uno).</p>');var b=$('#modal [data-mb="1"]');if(b)b.textContent='Descargar'},
+  syncSave:function(){var f=readForm($('#syncForm'));var u=String(f.url||'').trim();if(f.on&&!/^https:\/\/.+/.test(u))return toast('La URL debe empezar con https://');Sync.cfg={url:u,path:String(f.path||'consumoYeso').trim().replace(/[.#$\[\]]/g,'')||'consumoYeso',auth:String(f.auth||'').trim(),on:!!f.on};Sync.saveCfg();if(Sync.cfg.on){Sync.pull(false,true)}else{Sync.set('off')}toast(Sync.cfg.on?'Conectando…':'Sincronización desactivada')},
+  syncDown:function(){if(!Sync.url())return toast('Primero activa y guarda la sincronización');confirmBox('Se reemplazarán los datos de este dispositivo por los de la nube. ¿Continuar?',function(){Sync.pull(true)},'Bajar datos')}
+};
+document.addEventListener('click',function(e){
+  var mb=e.target.closest('[data-mb]');if(mb){var b=mBtns[+mb.getAttribute('data-mb')],box=mb.closest('.mbox');if(b&&b.fn){if(b.fn(box)===false)return}closeModal();return}
+  if(e.target.id==='modal'){closeModal();return}
+  var el=e.target.closest('[data-a]');if(!el)return;var f=A[el.getAttribute('data-a')];if(!f)return;
+  if(el.closest('#modal')&&el.getAttribute('data-a')!=='closeM'){closeModal()}
+  f(Object.assign({},el.dataset),el,e)});
+document.addEventListener('input',function(e){var n=e.target.name;if(!n)return;var box=e.target.closest('.mbox');if(box&&mInput){mInput(box,n);return}var fm=e.target.closest('[data-form="cons"]');if(fm)consLink(fm,n)});
+document.addEventListener('change',function(e){var k=e.target.getAttribute&&e.target.getAttribute('data-plan');if(k){var p=k.split('|'),y=UI.year,v=e.target.value;if(!S.plan[y])S.plan[y]={};if(!S.plan[y][p[0]])S.plan[y][p[0]]={};if(v==='')delete S.plan[y][p[0]][p[1]];else S.plan[y][p[0]][p[1]]=num(v);save();render();return}
+  if(e.target.id==='matSel'){UI.mat=e.target.value;cache={};render()}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#modal').hidden)closeModal();if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('pc')){e.target.blur()}});
+$('#impFile').addEventListener('change',function(e){var file=e.target.files[0];if(!file)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!o||!o.materiales)throw new Error('formato');confirmBox('Se reemplazarán los datos actuales por el respaldo <b>'+esc(file.name)+'</b>. ¿Continuar?',function(){S=norm(o);save();render();toast('Respaldo importado')},'Importar')}catch(x){toast('El archivo no es un respaldo válido')}};r.readAsText(file)});
+function dl(blob,name){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},2000)}
+
+/* ================= SINCRONIZACIÓN (Firebase Realtime Database REST) ================= */
+var Sync={cfg:(function(){try{return JSON.parse(localStorage.getItem(LSS))||{}}catch(e){return {}}})(),st:'off',msg:'',last:null,t:null,
+  url:function(){var c=this.cfg;if(!c.on||!c.url)return null;var u=String(c.url).trim().replace(/\/+$/,'');if(!/^https:\/\//.test(u))return null;return u+'/'+encodeURIComponent(c.path||'consumoYeso')+'.json'+(c.auth?'?auth='+encodeURIComponent(c.auth):'')},
+  saveCfg:function(){try{localStorage.setItem(LSS,JSON.stringify(this.cfg))}catch(e){}},
+  push:function(){var u=this.url(),me=this;if(!u)return;clearTimeout(this.t);this.t=setTimeout(function(){me.set('sync');fetch(u,{method:'PUT',body:JSON.stringify(S)}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);me.last=new Date();me.set('ok')}).catch(function(e){me.set('err',e.message)})},800)},
+  pull:function(force,first){var u=this.url(),me=this;if(!u){this.set('off');return}if(typeof fetch!=='function')return;this.set('sync');
+    fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(d){me.last=new Date();
+      if(d&&d.materiales&&(force||(d.updatedAt||0)>(S.updatedAt||0))){S=norm(d);cache={};try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}me.set('ok');render();if(force)toast('Datos de la nube cargados')}
+      else if(!d||!d.materiales||(d.updatedAt||0)<(S.updatedAt||0)){me.set('ok');me.push();if(first)toast('Conectado: tus datos se subieron a la nube')}
+      else{me.set('ok');if(first)toast('Conectado y al día')}}).catch(function(e){me.set('err',e.message)})},
+  set:function(s,m){this.st=s;this.msg=m||'';paintSync()}};
+function paintSync(){var c=$('#sync');if(!c)return;var s=Sync.url()?Sync.st:'off';c.className='chip'+(s==='ok'?' ok':s==='err'?' err':'');c.textContent=s==='ok'?'☁ Sincronizado':s==='sync'?'☁ …':s==='err'?'⚠ Sin conexión':'Solo local';c.title=s==='err'?Sync.msg:'';
+  var m=$('#syncMsg');if(m)m.textContent=s==='ok'&&Sync.last?'Última sincronización: '+Sync.last.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):s==='err'?'Error: '+Sync.msg+' (revisa la URL y las reglas)':''}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')Sync.pull()});
+setInterval(function(){if(document.visibilityState==='visible'&&$('#modal').hidden)Sync.pull()},30000);
+
+/* ================= EXCEL (.xlsx nativo, sin librerías) ================= */
+var CRC=(function(){var t=new Uint32Array(256);for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(d){var c=0xFFFFFFFF;for(var i=0;i<d.length;i++)c=CRC[(c^d[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zip(files){var enc=new TextEncoder(),parts=[],cen=[],off=0,now=new Date(),dt=((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate(),tm=(now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1);
+  files.forEach(function(f){var nm=enc.encode(f.name),d=f.data,c=crc32(d),h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,0,true);h.setUint16(10,tm,true);h.setUint16(12,dt,true);h.setUint32(14,c,true);h.setUint32(18,d.length,true);h.setUint32(22,d.length,true);h.setUint16(26,nm.length,true);h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer),nm,d);
+    var ce=new DataView(new ArrayBuffer(46));ce.setUint32(0,0x02014b50,true);ce.setUint16(4,20,true);ce.setUint16(6,20,true);ce.setUint16(8,0x0800,true);ce.setUint16(10,0,true);ce.setUint16(12,tm,true);ce.setUint16(14,dt,true);ce.setUint32(16,c,true);ce.setUint32(20,d.length,true);ce.setUint32(24,d.length,true);ce.setUint16(28,nm.length,true);ce.setUint32(42,off,true);
+    cen.push(new Uint8Array(ce.buffer),nm);off+=30+nm.length+d.length});
+  var cs=cen.reduce(function(a,b){return a+b.length},0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+  return new Blob(parts.concat(cen,[new Uint8Array(e.buffer)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})}
+function colL(i){var s='';i++;while(i>0){var r=(i-1)%26;s=String.fromCharCode(65+r)+s;i=Math.floor((i-1)/26)}return s}
+function xe(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g,'')}
+var NS='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',RELNS='xmlns="http://schemas.openxmlformats.org/package/2006/relationships"',XH='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
+var STYLES='<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="3"><numFmt numFmtId="164" formatCode="#,##0.0"/><numFmt numFmtId="165" formatCode="#,##0"/><numFmt numFmtId="166" formatCode="0.0%"/></numFmts>'+
+ '<fonts count="5"><font><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="15"/><color rgb="FF1F2F46"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><i/><sz val="10"/><color rgb="FF666666"/><name val="Calibri"/><family val="2"/></font></fonts>'+
+ '<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1F2F46"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE8EEF6"/><bgColor indexed="64"/></patternFill></fill></fills>'+
+ '<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left/><right/><top/><bottom style="thin"><color rgb="FFC9D2DE"/></bottom><diagonal/></border></borders>'+
+ '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="13">'+
+ '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'+
+ '<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'+
+ '<xf numFmtId="164" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/>'+
+ '<xf numFmtId="165" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/>'+
+ '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>'+
+ '<xf numFmtId="166" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/>'+
+ '<xf numFmtId="0" fontId="3" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"/>'+
+ '<xf numFmtId="164" fontId="3" fillId="3" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"/>'+
+ '<xf numFmtId="0" fontId="4" fillId="0" borderId="0" xfId="0" applyFont="1"/>'+
+ '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"/>'+
+ '<xf numFmtId="166" fontId="3" fillId="3" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"/>'+
+ '<xf numFmtId="165" fontId="3" fillId="3" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"/>'+
+ '<xf numFmtId="14" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/>'+
+ '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+function sheetXML(sh,si){var rows='';sh.rows.forEach(function(r,ri){r=r||[];var cells='';r.forEach(function(c,ci){if(c===null||c===undefined||c==='')return;if(typeof c!=='object')c={v:c,s:typeof c==='number'?2:9};var ref=colL(ci)+(ri+1),s=c.s?' s="'+c.s+'"':'';
+    if(c.f!==undefined)cells+='<c r="'+ref+'"'+s+'><f>'+xe(c.f)+'</f>'+(typeof c.v==='number'&&isFinite(c.v)?'<v>'+c.v+'</v>':'')+'</c>';
+    else if(typeof c.v==='number'){if(isFinite(c.v))cells+='<c r="'+ref+'"'+s+'><v>'+(Math.round(c.v*1e6)/1e6)+'</v></c>'}
+    else if(c.v===undefined||c.v===null||c.v===''){if(c.s)cells+='<c r="'+ref+'"'+s+'/>'}
+    else cells+='<c r="'+ref+'"'+s+' t="inlineStr"><is><t xml:space="preserve">'+xe(c.v)+'</t></is></c>'});rows+='<row r="'+(ri+1)+'">'+cells+'</row>'});
+  var pane=sh.freeze?'<pane ySplit="'+sh.freeze+'" topLeftCell="A'+(sh.freeze+1)+'" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A'+(sh.freeze+1)+'" sqref="A'+(sh.freeze+1)+'"/>':'';
+  return '<worksheet '+NS+'><sheetViews><sheetView workbookViewId="0"'+(si===0?' tabSelected="1"':'')+'>'+pane+'</sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/>'+
+    (sh.cols?'<cols>'+sh.cols.map(function(w,i){return '<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>'}).join('')+'</cols>':'')+
+    '<sheetData>'+rows+'</sheetData>'+(sh.af?'<autoFilter ref="'+sh.af+'"/>':'')+'<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>'+(sh.chart?'<drawing r:id="rId1"/>':'')+'</worksheet>'}
+function chartXML(ch,sheetName){var q="'"+sheetName.replace(/'/g,"''")+"'";function rf(c,a,b){return q+'!$'+c+'$'+a+':$'+c+'$'+b}
+  function sc(a){return '<c:strCache><c:ptCount val="'+a.length+'"/>'+a.map(function(v,i){return '<c:pt idx="'+i+'"><c:v>'+xe(v)+'</c:v></c:pt>'}).join('')+'</c:strCache>'}
+  function nc(a){return '<c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="'+a.length+'"/>'+a.map(function(v,i){return '<c:pt idx="'+i+'"><c:v>'+(Math.round((+v||0)*100)/100)+'</c:v></c:pt>'}).join('')+'</c:numCache>'}
+  var ser=ch.series.map(function(s,i){return '<c:ser><c:idx val="'+i+'"/><c:order val="'+i+'"/><c:tx><c:strRef><c:f>'+q+'!$'+s.col+'$'+ch.hdr+'</c:f>'+sc([s.name])+'</c:strRef></c:tx><c:spPr><a:solidFill><a:srgbClr val="'+s.color+'"/></a:solidFill></c:spPr><c:invertIfNegative val="0"/><c:cat><c:strRef><c:f>'+rf(ch.catCol,ch.r1,ch.r2)+'</c:f>'+sc(ch.cats)+'</c:strRef></c:cat><c:val><c:numRef><c:f>'+rf(s.col,ch.r1,ch.r2)+'</c:f>'+nc(s.values)+'</c:numRef></c:val></c:ser>'}).join('');
+  return '<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><c:roundedCorners val="0"/><c:chart><c:title><c:tx><c:rich><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="1200" b="1"/></a:pPr><a:r><a:rPr lang="es-MX" sz="1200" b="1"/><a:t>'+xe(ch.title)+'</a:t></a:r></a:p></c:rich></c:tx><c:overlay val="0"/></c:title><c:autoTitleDeleted val="0"/><c:plotArea><c:layout/>'+
+    '<c:barChart><c:barDir val="col"/><c:grouping val="clustered"/><c:varyColors val="0"/>'+ser+'<c:gapWidth val="60"/><c:axId val="50010"/><c:axId val="50020"/></c:barChart>'+
+    '<c:catAx><c:axId val="50010"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/><c:numFmt formatCode="General" sourceLinked="0"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="50020"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>'+
+    '<c:valAx><c:axId val="50020"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="l"/><c:majorGridlines><c:spPr><a:ln w="6350"><a:solidFill><a:srgbClr val="E3E0D8"/></a:solidFill></a:ln></c:spPr></c:majorGridlines><c:numFmt formatCode="#,##0" sourceLinked="0"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="50010"/><c:crosses val="autoZero"/><c:crossBetween val="between"/></c:valAx>'+
+    '</c:plotArea><c:legend><c:legendPos val="b"/><c:overlay val="0"/></c:legend><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart></c:chartSpace>'}
+function drawingXML(a){return '<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><xdr:twoCellAnchor><xdr:from><xdr:col>'+a[0]+'</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>'+a[1]+'</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from><xdr:to><xdr:col>'+a[2]+'</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>'+a[3]+'</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to><xdr:graphicFrame macro=""><xdr:nvGraphicFramePr><xdr:cNvPr id="2" name="Grafica"/><xdr:cNvGraphicFramePr/></xdr:nvGraphicFramePr><xdr:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></xdr:xfrm><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId1"/></a:graphicData></a:graphic></xdr:graphicFrame><xdr:clientData/></xdr:twoCellAnchor></xdr:wsDr>'}
+function buildXLSX(sheets){var enc=new TextEncoder(),files=[];function add(n,s){files.push({name:n,data:enc.encode(XH+s)})}
+  var ct='<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>',wbs='',wbr='',ci=0;
+  add('_rels/.rels','<Relationships '+RELNS+'><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+  sheets.forEach(function(sh,i){var n=i+1;ct+='<Override PartName="/xl/worksheets/sheet'+n+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';wbs+='<sheet name="'+xe(sh.name)+'" sheetId="'+n+'" r:id="rId'+n+'"/>';wbr+='<Relationship Id="rId'+n+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+n+'.xml"/>';
+    if(sh.chart){ci++;ct+='<Override PartName="/xl/drawings/drawing'+ci+'.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/><Override PartName="/xl/charts/chart'+ci+'.xml" ContentType="application/vnd.openxmlformats-officedocument.drawingml.chart+xml"/>';
+      add('xl/worksheets/_rels/sheet'+n+'.xml.rels','<Relationships '+RELNS+'><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing'+ci+'.xml"/></Relationships>');
+      add('xl/drawings/drawing'+ci+'.xml',drawingXML(sh.chart.anchor));
+      add('xl/drawings/_rels/drawing'+ci+'.xml.rels','<Relationships '+RELNS+'><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart'+ci+'.xml"/></Relationships>');
+      add('xl/charts/chart'+ci+'.xml',chartXML(sh.chart,sh.name))}
+    add('xl/worksheets/sheet'+n+'.xml',sheetXML(sh,i))});
+  wbr+='<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>';
+  add('xl/workbook.xml','<workbook '+NS+'><bookViews><workbookView xWindow="0" yWindow="0" windowWidth="18000" windowHeight="10000"/></bookViews><sheets>'+wbs+'</sheets><calcPr calcId="191029" fullCalcOnLoad="1"/></workbook>');
+  add('xl/_rels/workbook.xml.rels','<Relationships '+RELNS+'>'+wbr+'</Relationships>');
+  add('xl/styles.xml',STYLES);
+  files.unshift({name:'[Content_Types].xml',data:enc.encode(XH+ct+'</Types>')});
+  return zip(files)}
+function exportExcel(y){
+  var t=today(),k=kpis(),ref=k.ref,merma=num(S.config.merma)/100,matTxt=UI.mat==='all'?'Todos los materiales':(matById(UI.mat)||{}).nombre,I=idx();
+  var sub='Generado '+fdate(t)+' · '+matTxt+' · Año '+y+(S.ejemplo?' · DATOS DE EJEMPLO':'');
+  function H(v){return {v:v,s:1}}function N(v){return {v:+v||0,s:2}}function N0(v){return {v:+v||0,s:3}}function P(v){return {v:+v||0,s:5}}function T(v){return {v:v,s:4}}function SB(v){return {v:v,s:8}}function TX(v){return {v:v==null?'':String(v),s:9}}
+  function D(s){return isDate(s)?{v:(pd(s)-Date.UTC(1899,11,30))/864e5,s:12}:TX('')}function TL(v){return {v:v,s:6}}function TN(f,v){return {f:f,v:v,s:7}}function TI(f,v){return {f:f,v:v,s:11}}function TP(f,v){return {f:f,v:v,s:10}}
+  var anualY=0;for(var i=0;i<12;i++)anualY+=estMes(y,i);var realY=sumRange(I.real,y+'-01-01',y+'-12-31');
+  var sheets=[];
+  /* Resumen */
+  var R=[[T('Consumo de yeso – Resumen')],[SB(sub)],[],[H('Indicador'),H('Valor'),H('Unidad'),H('Nota')],
+    [TX('Stock actual'),N(k.st),TX('kg'),TX(ref?fmt(k.st/ref,1)+' sacos':'')],[TX('Stock mínimo'),N(k.min),TX('kg'),TX('')],
+    [TX('Consumo estimado del mes'),N(k.em),TX('kg'),TX(MESL[k.m]+' '+k.y)],[TX('Consumo estimado del mes a la fecha'),N(k.eTo),TX('kg'),TX('')],[TX('Consumo real del mes a la fecha'),N(k.rm),TX('kg'),TX('')],
+    [TX('Real vs estimado (mes a la fecha)'),P(k.eTo?k.rm/k.eTo:0),TX('%'),TX('')],[TX('Consumo estimado anual '+y),N(anualY),TX('kg'),TX(ref?fmt(anualY/ref)+' sacos':'')],[TX('Consumo real registrado '+y),N(realY),TX('kg'),TX('')],
+    [TX('Promedio diario estimado (próx. 30 días)'),N(k.prom),TX('kg/día'),TX('')],[TX('Cobertura con P.O. abiertas'),k.cob==null?TX('Más de 400'):N0(k.cob),TX('días'),TX(k.pj.cero?'Agotamiento '+fdate(k.pj.cero):'')],
+    [TX('Cobertura sin nuevas entregas'),k.cobSin==null?TX('Más de 400'):N0(k.cobSin),TX('días'),TX(k.pj.ceroSin?'Agotamiento '+fdate(k.pj.ceroSin):'')],
+    [TX('Fecha proyectada bajo stock mínimo'),k.pj.bajoMin?D(k.pj.bajoMin):TX('No baja en 400 días'),TX(''),TX('')],[TX('Fecha sugerida para siguiente P.O.'),k.sug?D(k.sug):TX('—'),TX(''),TX('Lead time '+k.lead+' días')],
+    [TX('Cantidad sugerida siguiente P.O.'),N(k.sugKg),TX('kg'),TX(ref&&k.sugKg?Math.ceil(k.sugKg/ref)+' sacos (30 días de consumo)':'')],[TX('P.O. abiertas'),N0(k.pend.length),TX(''),TX('')],
+    [TX('Kg pendientes por recibir'),N(k.pendKgT),TX('kg'),TX('')],[TX('Próxima entrega esperada'),k.next?D(k.next):TX('—'),TX(''),TX('')],[],
+    [H('Parámetro'),H('Valor'),H(''),H('')],[TX('Merma'),P(merma),TX(''),TX('')],[TX('Días laborables'),TX(S.config.diasLab.slice().sort(function(a,b){return ((a+6)%7)-((b+6)%7)}).map(function(d){return DIAS[d]}).join(', ')),TX(''),TX('')],[TX('Lead time proveedor'),N0(k.lead),TX('días'),TX('')],[],
+    [H('Material'),H('Kg por saco'),H('Stock inicial kg'),H('Fecha conteo'),H('Stock mínimo kg'),H('Stock actual kg'),H('Stock actual sacos')]];
+  mats().forEach(function(m){var st=stockAt(t,[m]);R.push([TX(m.nombre),N(m.kgSaco),N(m.stockIni),D(m.fechaIni),N(m.minimo),N(st),N(num(m.kgSaco)?st/num(m.kgSaco):0)])});
+  sheets.push({name:'Resumen',cols:[40,16,16,30,16,16,16],rows:R});
+  /* Plan */
+  var ms=mods(),PL=[[T('Plan de consumo de yeso '+y)],[SB(sub)],[TX('Merma'),P(merma)],[],[H('Modelo'),H('Material'),H('Kg yeso/molde'),H('Moldes base/mes')].concat(MES.map(function(m){return H(m+' (moldes)')}),[H('Total moldes')])];
+  var r0=6;ms.forEach(function(md,j){var r=r0+j,vals=MES.map(function(_,i){return moldesPlan(md,y,i)});PL.push([TX(md.nombre),TX((matById(md.materialId)||{}).nombre||''),N(md.kgPorMolde),N0(md.moldesMes)].concat(vals.map(N0),[TI('SUM(E'+r+':P'+r+')',vals.reduce(function(a,b){return a+b},0))]))});
+  PL.push([]);var h2=r0+ms.length+1;PL.push([H('Modelo'),H('Material'),H(''),H('')].concat(MES.map(function(m){return H(m+' (kg)')}),[H('Total kg')]));
+  var k0=h2+1;ms.forEach(function(md,j){var r=k0+j,src=r0+j,row=[TX(md.nombre),TX((matById(md.materialId)||{}).nombre||''),TX(''),TX('')],tot=0;for(var i=0;i<12;i++){var c=colL(4+i),v=moldesPlan(md,y,i)*kgMolde(md);tot+=v;row.push({f:c+src+'*$C'+src+'*(1+$B$3)',v:v,s:2})}row.push(TN('SUM(E'+r+':P'+r+')',tot));PL.push(row)});
+  if(ms.length){var tr=k0+ms.length,rowT=[TL('TOTAL kg'),TL(''),TL(''),TL('')],rowS=[TL('TOTAL toneladas'),TL(''),TL(''),TL('')],rowSa=[TL('TOTAL sacos ('+ref+' kg)'),TL(''),TL(''),TL('')];
+    for(var c2=4;c2<=16;c2++){var L=colL(c2),v2=c2<16?estMes(y,c2-4):anualY;rowT.push(TN('SUM('+L+k0+':'+L+(tr-1)+')',v2));rowS.push(TN(L+tr+'/1000',v2/1000));rowSa.push(TN(L+tr+'/'+(ref||1),ref?v2/ref:0))}
+    PL.push(rowT,rowS);if(ref)PL.push(rowSa)}
+  else PL.push([TX('Sin modelos registrados')]);
+  sheets.push({name:'Plan',cols:[28,18,14,14].concat(MES.map(function(){return 12}),[14]),rows:PL,freeze:5});
+  /* Mensual */
+  var mm=meses(y),M=[[T('Comportamiento mensual '+y)],[SB(sub)],[H('Mes'),H('Estimado kg'),H('Real kg'),H('Diferencia kg'),H('Cumplimiento'),H('Recibido kg'),H('Stock fin de mes kg'),H('Stock')]];
+  mm.forEach(function(r,i){var n=4+i;M.push([TX(MESL[r.m]),N(r.est),N(r.real),{f:'C'+n+'-B'+n,v:r.real-r.est,s:2},{f:'IF(B'+n+'>0,C'+n+'/B'+n+',0)',v:r.est?r.real/r.est:0,s:5},N(r.rec),r.stock==null?TX(''):N(r.stock),TX(r.tipo)])});
+  var sE=mm.reduce(function(a,r){return a+r.est},0),sR=mm.reduce(function(a,r){return a+r.real},0),sC=mm.reduce(function(a,r){return a+r.rec},0);
+  M.push([TL('TOTAL'),TN('SUM(B4:B15)',sE),TN('SUM(C4:C15)',sR),TN('SUM(D4:D15)',sR-sE),TP('IF(B16>0,C16/B16,0)',sE?sR/sE:0),TN('SUM(F4:F15)',sC),TL(''),TL('')]);
+  sheets.push({name:'Mensual',cols:[14,14,14,14,13,14,18,12],rows:M,freeze:3,chart:{title:'Consumo mensual '+y+' (kg)',hdr:3,r1:4,r2:15,catCol:'A',cats:mm.map(function(r){return MESL[r.m]}),anchor:[9,1,20,22],
+    series:[{col:'B',name:'Estimado kg',color:'8EA3BF',values:mm.map(function(r){return r.est})},{col:'C',name:'Real kg',color:'D9822B',values:mm.map(function(r){return r.real})},{col:'F',name:'Recibido kg',color:'2F8F6B',values:mm.map(function(r){return r.rec})}]}});
+  /* Semanal */
+  var sw=semanas(y+'-01-01',y+'-12-31').filter(function(r){return r.wy===y}),W=[[T('Comportamiento semanal '+y)],[SB(sub)],[H('Semana'),H('Inicio'),H('Fin'),H('Estimado kg'),H('Real kg'),H('Diferencia kg'),H('Cumplimiento'),H('Recibido kg'),H('Stock final kg'),H('Stock')]];
+  sw.forEach(function(r,i){var n=4+i;W.push([TX('S'+pad(r.w)),D(r.s),D(r.e),N(r.est),N(r.real),{f:'E'+n+'-D'+n,v:r.real-r.est,s:2},{f:'IF(D'+n+'>0,E'+n+'/D'+n+',0)',v:r.est?r.real/r.est:0,s:5},N(r.rec),r.stock==null?TX(''):N(r.stock),TX(r.tipo)])});
+  var we=3+sw.length;W.push([TL('TOTAL'),TL(''),TL(''),TN('SUM(D4:D'+we+')',sw.reduce(function(a,r){return a+r.est},0)),TN('SUM(E4:E'+we+')',sw.reduce(function(a,r){return a+r.real},0)),TN('SUM(F4:F'+we+')',0),TP('IF(D'+(we+1)+'>0,E'+(we+1)+'/D'+(we+1)+',0)',0),TN('SUM(H4:H'+we+')',sw.reduce(function(a,r){return a+r.rec},0)),TL(''),TL('')]);
+  sheets.push({name:'Semanal',cols:[10,12,12,14,14,14,13,14,16,12],rows:W,freeze:3,chart:{title:'Consumo semanal '+y+' (kg)',hdr:3,r1:4,r2:we,catCol:'A',cats:sw.map(function(r){return 'S'+pad(r.w)}),anchor:[11,1,30,24],
+    series:[{col:'D',name:'Estimado kg',color:'8EA3BF',values:sw.map(function(r){return r.est})},{col:'E',name:'Real kg',color:'D9822B',values:sw.map(function(r){return r.real})},{col:'H',name:'Recibido kg',color:'2F8F6B',values:sw.map(function(r){return r.rec})}]}});
+  /* Órdenes */
+  var pos=S.pos.filter(function(p){return I.ms[p.materialId]}).sort(function(a,b){return a.fechaSol<b.fechaSol?-1:1}),O=[[T('Órdenes de compra (P.O.)')],[SB(sub)],[H('Número P.O.'),H('Proveedor'),H('Material'),H('Fecha solicitud'),H('Entrega esperada'),H('Sacos solicitados'),H('Kg solicitados'),H('Sacos recibidos'),H('Kg recibidos'),H('Sacos pendientes'),H('Última recepción'),H('Días solicitud→recepción'),H('Estado'),H('Nota')]];
+  pos.forEach(function(p,i){var n=4+i,ks=poKgSaco(p),rec=poRec(p),last=p.recibos.map(function(r){return r.fecha}).sort().pop();O.push([TX(p.numero),TX(p.proveedor),TX((matById(p.materialId)||{}).nombre||''),D(p.fechaSol),D(p.fechaEsp),N0(p.sacos),N(num(p.sacos)*ks),N0(rec),N(rec*ks),{f:'MAX(0,F'+n+'-H'+n+')',v:Math.max(0,num(p.sacos)-rec),s:3},last?D(last):TX(''),last?N0(diffDays(p.fechaSol,last)):TX(''),TX(poStatus(p)),TX(p.nota)])});
+  sheets.push({name:'Ordenes PO',cols:[14,22,20,14,14,12,13,12,13,12,14,14,12,30],rows:O,freeze:3,af:'A3:N'+(3+Math.max(1,pos.length))});
+  /* Recepciones */
+  var RC=[[T('Recepciones de yeso')],[SB(sub)],[H('Fecha'),H('Número P.O.'),H('Proveedor'),H('Material'),H('Sacos'),H('Kg'),H('Semana'),H('Mes')]],recs=[];
+  pos.forEach(function(p){var ks=poKgSaco(p);p.recibos.forEach(function(r){recs.push({r:r,p:p,ks:ks})})});recs.sort(function(a,b){return a.r.fecha<b.r.fecha?-1:1});
+  recs.forEach(function(x){RC.push([D(x.r.fecha),TX(x.p.numero),TX(x.p.proveedor),TX((matById(x.p.materialId)||{}).nombre||''),N0(x.r.sacos),N(num(x.r.sacos)*x.ks),TX('S'+pad(isoWeek(x.r.fecha).w)+'-'+isoWeek(x.r.fecha).y),TX(MESL[+x.r.fecha.slice(5,7)-1]+' '+x.r.fecha.slice(0,4))])});
+  sheets.push({name:'Recepciones',cols:[12,14,22,20,10,12,12,16],rows:RC,freeze:3,af:'A3:H'+(3+Math.max(1,recs.length))});
+  /* Consumos */
+  var cs=S.consumos.filter(function(c){return I.ms[c.materialId]&&c.fecha.slice(0,4)===String(y)}).sort(function(a,b){return a.fecha<b.fecha?-1:a.fecha>b.fecha?1:0}),C=[[T('Consumos registrados '+y)],[SB(sub)],[H('Fecha'),H('Semana'),H('Mes'),H('Modelo'),H('Material'),H('Moldes'),H('Kg yeso'),H('Sacos'),H('Nota')]];
+  cs.forEach(function(c){var mt=matById(c.materialId),ks=num(mt&&mt.kgSaco),mo=modById(c.modeloId);C.push([D(c.fecha),TX('S'+pad(isoWeek(c.fecha).w)),TX(MESL[+c.fecha.slice(5,7)-1]),TX(mo?mo.nombre:'Directo'),TX(mt?mt.nombre:''),N0(c.moldes),N(c.kg),N(ks?num(c.kg)/ks:0),TX(c.nota)])});
+  var ce=3+cs.length;C.push([TL('TOTAL'),TL(''),TL(''),TL(''),TL(''),TI('SUM(F4:F'+ce+')',cs.reduce(function(a,c){return a+num(c.moldes)},0)),TN('SUM(G4:G'+ce+')',cs.reduce(function(a,c){return a+num(c.kg)},0)),TN('SUM(H4:H'+ce+')',0),TL('')]);
+  sheets.push({name:'Consumos',cols:[12,9,12,26,20,10,12,10,30],rows:C,freeze:3,af:'A3:I'+Math.max(4,ce)});
+  /* Modelos */
+  var MD=[[T('Modelos de molde')],[SB(sub)],[H('Modelo'),H('Material'),H('Kg yeso por molde'),H('Kg con merma'),H('Moldes base/mes'),H('Kg base/mes'),H('Moldes plan '+y),H('Kg plan '+y)]];
+  ms.forEach(function(md){var mo=0;for(var i=0;i<12;i++)mo+=moldesPlan(md,y,i);MD.push([TX(md.nombre),TX((matById(md.materialId)||{}).nombre||''),N(md.kgPorMolde),N(kgMolde(md)),N0(md.moldesMes),N(num(md.moldesMes)*kgMolde(md)),N0(mo),N(mo*kgMolde(md))])});
+  sheets.push({name:'Modelos',cols:[28,20,16,14,15,14,15,14],rows:MD,freeze:3});
+  dl(buildXLSX(sheets),'Consumo-Yeso-'+y+'_'+t+'.xlsx');
+}
+window.__yeso={exportExcel:exportExcel,buildXLSX:buildXLSX,state:function(){return S}};
+
+render();
+if(Sync.url())Sync.pull();
+})();
+</script>
+</body>
+</html>
